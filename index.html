@@ -9,32 +9,6 @@
 <body>
     <header class="app-header">
         <h1>Dart Tracking</h1>
-        <div class="target-selector-header">
-            <label for="targetSelect">Ziel:</label>
-            <select id="targetSelect" class="target-dropdown">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-                <option value="13">13</option>
-                <option value="14">14</option>
-                <option value="15">15</option>
-                <option value="16">16</option>
-                <option value="17">17</option>
-                <option value="18">18</option>
-                <option value="19">19</option>
-                <option value="20" selected>20</option>
-                <option value="25">25 (Bull)</option>
-            </select>
-        </div>
         <div class="header-controls">
             <a href="stats.html" class="nav-button">Statistiken</a>
             <button id="undoBtn" class="undo-button">↶ Zurück</button>
@@ -79,6 +53,37 @@
             <h2>Letzte Würfe</h2>
             <div class="history-list" id="historyList">
                 <div class="history-placeholder">Noch keine Würfe erfasst</div>
+            </div>
+        </section>
+
+        <!-- Zielauswahl -->
+        <section class="target-selection">
+            <h2>Trainingsziel</h2>
+            <div class="target-selector-bottom">
+                <label for="targetSelect">Aktuelles Ziel:</label>
+                <select id="targetSelect" class="target-dropdown">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20" selected>20</option>
+                    <option value="25">25 (Bull)</option>
+                </select>
             </div>
         </section>
     </main>

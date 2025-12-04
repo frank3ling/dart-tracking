@@ -25,8 +25,6 @@ body {
     position: sticky;
     top: 0;
     z-index: 100;
-    flex-wrap: wrap;
-    gap: 10px;
 }
 
 .app-header h1 {
@@ -36,47 +34,10 @@ body {
     margin: 0;
 }
 
-.target-selector-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    order: 2;
-}
-
-.target-selector-header label {
-    color: #cccccc;
-    font-size: 14px;
-    font-weight: 500;
-}
-
-.target-dropdown {
-    background: #4a4a4a;
-    color: #ffffff;
-    border: 1px solid #555;
-    border-radius: 6px;
-    padding: 6px 12px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    min-width: 80px;
-}
-
-.target-dropdown:focus {
-    outline: none;
-    border-color: #3498db;
-    background: #555;
-}
-
-.target-dropdown option {
-    background: #4a4a4a;
-    color: #ffffff;
-}
-
 .header-controls {
     display: flex;
     gap: 10px;
     align-items: center;
-    order: 3;
 }
 
 .nav-button {
@@ -140,6 +101,47 @@ section h2 {
     font-size: 18px;
     margin-bottom: 15px;
     font-weight: 600;
+}
+
+/* === TARGET SELECTION BOTTOM === */
+.target-selector-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+.target-selector-bottom label {
+    color: #cccccc;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.target-dropdown {
+    background: #4a4a4a;
+    color: #ffffff;
+    border: 2px solid #555;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    min-width: 120px;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.target-dropdown:focus {
+    outline: none;
+    border-color: #3498db;
+    background: #555;
+    transform: translateY(-1px);
+}
+
+.target-dropdown option {
+    background: #4a4a4a;
+    color: #ffffff;
+    padding: 8px;
 }
 
 /* === TARGET SELECTION === */
@@ -350,29 +352,16 @@ section h2 {
     
     .app-header {
         padding: 12px 15px;
-        flex-direction: column;
-        align-items: stretch;
-        gap: 10px;
     }
     
     .app-header h1 {
         font-size: 20px;
-        text-align: center;
-        order: 1;
     }
     
-    .target-selector-header {
-        justify-content: center;
-        order: 2;
-    }
-    
-    .header-controls {
-        justify-content: center;
-        order: 3;
-    }
-    
-    .target-grid {
-        grid-template-columns: repeat(4, 1fr);
+    .target-dropdown {
+        min-width: 100px;
+        font-size: 16px;
+        padding: 10px 14px;
     }
     
     .input-buttons {
