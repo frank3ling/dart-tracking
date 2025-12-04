@@ -173,10 +173,10 @@ function calculateStatistics(throws) {
     if (throws.length === 0) return stats;
 
     stats.totalThrows = throws.length;
-    stats.totalDarts = throws.length * 3;
 
     let totalHits = 0;
     const positionHits = [0, 0, 0];
+    let actualDartsCount = 0;
 
     throws.forEach(throwData => {
         stats.totalPoints += throwData.totalPoints;
@@ -190,17 +190,23 @@ function calculateStatistics(throws) {
         else if (points >= 140 && points < 180) stats.categories.hundredFortyPlus++;
         else if (points === 180) stats.categories.oneEighty++;
 
-        // Count hits for accuracy
+        // Count hits for accuracy (only count actual darts)
         throwData.darts.forEach((dart, index) => {
-            if (dart.hit) {
-                totalHits++;
-                positionHits[index]++;
+            if (dart && dart !== null) {
+                actualDartsCount++;
+                if (dart.hit) {
+                    totalHits++;
+                    positionHits[index]++;
+                }
             }
         });
     });
 
+    stats.totalDarts = actualDartsCount;
+
     // Calculate accuracy
     stats.accuracy.overall = stats.totalDarts > 0 ? (totalHits / stats.totalDarts) : 0;
+    // For each position: hits at position / total darts at position (= totalThrows for positions 1-3)
     stats.accuracy.byPosition = positionHits.map(hits => stats.totalThrows > 0 ? hits / stats.totalThrows : 0);
 
     // Last 10 throws statistics
@@ -208,8 +214,8 @@ function calculateStatistics(throws) {
     lastTen.forEach(throwData => {
         const points = throwData.totalPoints;
         if (points === 0) stats.lastTenThrows.zero++;
-        else if (points >= 100) stats.lastTenThrows.hundredPlus++;
-        else if (points >= 140) stats.lastTenThrows.hundredFortyPlus++;
+        else if (points >= 100 && points < 140) stats.lastTenThrows.hundredPlus++;
+        else if (points >= 140 && points < 180) stats.lastTenThrows.hundredFortyPlus++;
         else if (points === 180) stats.lastTenThrows.oneEighty++;
 
         throwData.darts.forEach(dart => {
