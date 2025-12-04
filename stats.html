@@ -130,8 +130,129 @@
     </style>
 </head>
 <body>
-    <!-- Tab Navigation -->
-    <nav class="tab-navigation">
+    <main class="app-main">
+        <!-- Overall Statistics -->
+        <section>
+            <h2>Gesamtstatistik</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalDarts">0</div>
+                    <div class="stat-label">Darts gesamt</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="totalThrows">0</div>
+                    <div class="stat-label">Würfe gesamt</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="averageScore">0.0</div>
+                    <div class="stat-label">Ø Punkte/Wurf</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="overallAccuracy">0%</div>
+                    <div class="stat-label">Trefferquote</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="accuracyProgress" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Throw Categories -->
+        <section>
+            <h2>Wurf-Kategorien</h2>
+            <div class="stats-large-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="zeroCount">0</div>
+                    <div class="stat-label">0 Punkte</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="sixtyPlusCount">0</div>
+                    <div class="stat-label">60-79</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="eightyPlusCount">0</div>
+                    <div class="stat-label">80-99</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="hundredPlusCount">0</div>
+                    <div class="stat-label">100-139</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="hundredFortyPlusCount">0</div>
+                    <div class="stat-label">140-179</div>
+                </div>
+                <div class="stat-card highlight">
+                    <div class="stat-value" id="oneEightyCount">0</div>
+                    <div class="stat-label">180</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Last 10 Throws -->
+        <section>
+            <h2>Letzte 10 Würfe</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="lastTenZero">0</div>
+                    <div class="stat-label">0 Punkte</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="lastTenHundredPlus">0</div>
+                    <div class="stat-label">100+</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="lastTenHundredFortyPlus">0</div>
+                    <div class="stat-label">140+</div>
+                </div>
+                <div class="stat-card highlight">
+                    <div class="stat-value" id="lastTenOneEighty">0</div>
+                    <div class="stat-label">180</div>
+                </div>
+            </div>
+
+            <!-- Dart Types in Last 10 Throws -->
+            <div class="stats-large-grid" style="margin-top: 20px;">
+                <div class="stat-card">
+                    <div class="stat-value" id="lastTenSingle">0</div>
+                    <div class="stat-label">Single</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="lastTenDouble">0</div>
+                    <div class="stat-label">Double</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="lastTenTriple">0</div>
+                    <div class="stat-label">Triple</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="lastTenMiss">0</div>
+                    <div class="stat-label">Miss</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Accuracy by Dart Position -->
+        <section>
+            <h2>Genauigkeit nach Pfeil-Position</h2>
+            <div class="accuracy-grid">
+                <div class="accuracy-item">
+                    <div class="accuracy-dart">1. Pfeil</div>
+                    <div class="accuracy-percent" id="accuracy1">0%</div>
+                </div>
+                <div class="accuracy-item">
+                    <div class="accuracy-dart">2. Pfeil</div>
+                    <div class="accuracy-percent" id="accuracy2">0%</div>
+                </div>
+                <div class="accuracy-item">
+                    <div class="accuracy-dart">3. Pfeil</div>
+                    <div class="accuracy-percent" id="accuracy3">0%</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Tab Navigation (Bottom) -->
+    <nav class="tab-navigation bottom-nav">
         <a href="index.html" class="tab-item">
             <span class="tab-icon">🎯</span>
             <span class="tab-label">Play</span>
@@ -145,8 +266,6 @@
             <span class="tab-label">Data</span>
         </a>
     </nav>
-
-    <main class="app-main">
         <!-- Overall Statistics -->
         <section>
             <h2>Gesamtstatistik</h2>

@@ -87,10 +87,17 @@ body {
 .tab-navigation {
     display: flex;
     background: #2c2c2c;
-    border-bottom: 2px solid #3498db;
-    position: sticky;
-    top: 0;
+    border-top: 2px solid #3498db;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
     z-index: 100;
+}
+
+.bottom-nav {
+    border-top: 2px solid #3498db;
+    border-bottom: none;
 }
 
 .tab-item {
@@ -98,11 +105,11 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 12px 8px;
+    padding: 8px 6px;
     text-decoration: none;
     color: #cccccc;
     transition: all 0.2s ease;
-    border-bottom: 3px solid transparent;
+    border-top: 3px solid transparent;
 }
 
 .tab-item:hover {
@@ -112,17 +119,17 @@ body {
 
 .tab-item.active {
     color: #3498db;
-    border-bottom-color: #3498db;
+    border-top-color: #3498db;
     background: #3a3a3a;
 }
 
 .tab-icon {
-    font-size: 20px;
-    margin-bottom: 4px;
+    font-size: 18px;
+    margin-bottom: 2px;
 }
 
 .tab-label {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -133,8 +140,9 @@ body {
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
+    padding-bottom: 80px;
     background: #2c2c2c;
-    min-height: calc(100vh - 70px);
+    min-height: calc(100vh - 80px);
 }
 
 /* === SECTIONS === */
@@ -333,24 +341,37 @@ section h2 {
     transform: scale(0.95);
 }
 
+.dart-btn {
+    background: #5a5a5a;
+    color: white;
+}
+
+.dart-btn:hover {
+    background: #6a6a6a;
+}
+
 .single-btn {
-    background: #27ae60;
+    background: #5a5a5a;
     color: white;
 }
 
 .double-btn {
-    background: #f39c12;
+    background: #5a5a5a;
     color: white;
 }
 
 .triple-btn {
-    background: #9b59b6;
+    background: #5a5a5a;
     color: white;
 }
 
 .miss-btn {
-    background: #e74c3c;
+    background: #a85a5a;
     color: white;
+}
+
+.miss-btn:hover {
+    background: #b86a6a;
 }
 
 .btn-label {

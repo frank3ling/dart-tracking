@@ -36,9 +36,11 @@ class DataManagementApp {
 
     updateRecentThrowsList() {
         const container = document.getElementById('recentThrowsList');
+        const summaryContainer = document.getElementById('totalThrowsSummary');
         
         if (this.recentThrows.length === 0) {
             container.innerHTML = '<div class="empty-state">Keine Würfe vorhanden</div>';
+            summaryContainer.innerHTML = '';
             return;
         }
 
@@ -61,6 +63,25 @@ class DataManagementApp {
         }).join('');
 
         container.innerHTML = listHTML;
+        
+        // Update summary with total throws count
+        this.updateTotalSummary();
+    }
+
+    async updateTotalSummary() {
+        try {
+            const allThrows = await dartDB.getAllThrows();
+            const totalCount = allThrows.length;
+            const summaryContainer = document.getElementById('totalThrowsSummary');
+            
+            if (totalCount > 0) {
+                summaryContainer.innerHTML = `Gesamt: ${totalCount} Würfe`;
+            } else {
+                summaryContainer.innerHTML = '';
+            }
+        } catch (error) {
+            console.error('Error loading total throws count:', error);
+        }
     }
 
     async deleteThrow(throwId) {
