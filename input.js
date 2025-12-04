@@ -78,7 +78,6 @@ class DartInputApp {
 
     inputDart(type) {
         if (this.currentThrow.currentDartIndex >= 3) {
-            this.showError('Wurf bereits vollständig!');
             return;
         }
 
@@ -121,10 +120,8 @@ class DartInputApp {
                 this.recentThrows = this.recentThrows.slice(0, 10);
             }
 
-            this.showSuccess(`Wurf gespeichert: ${throwData.totalPoints} Punkte`);
         } catch (error) {
             console.error('Error saving throw:', error);
-            this.showError('Fehler beim Speichern des Wurfs');
         }
 
         // Reset for next throw
@@ -186,7 +183,7 @@ class DartInputApp {
         }
 
         const historyHTML = this.recentThrows.slice(0, 3).map(throwData => {
-            const dartResults = throwData.darts.map(dart => formatDartResult(dart)).join('/');
+            const dartResults = throwData.darts.map(dart => formatDartResult(dart)).join(' / ');
             const timestamp = formatDateTime(new Date(throwData.timestamp));
             
             return `
@@ -206,7 +203,6 @@ class DartInputApp {
             this.currentThrow.currentDartIndex--;
             this.currentThrow.darts[this.currentThrow.currentDartIndex] = null;
             this.updateThrowDisplay();
-            this.showInfo('Letzter Pfeil entfernt');
             return;
         }
 
@@ -216,13 +212,9 @@ class DartInputApp {
             if (removedThrow) {
                 this.recentThrows = this.recentThrows.filter(t => t.id !== removedThrow.id);
                 this.updateHistoryDisplay();
-                this.showInfo('Letzter Wurf rückgängig gemacht');
-            } else {
-                this.showError('Keine Würfe zum Rückgängigmachen vorhanden');
             }
         } catch (error) {
             console.error('Error undoing throw:', error);
-            this.showError('Fehler beim Rückgängigmachen');
         }
     }
 
@@ -267,44 +259,7 @@ class DartInputApp {
         }
     }
 
-    showSuccess(message) {
-        this.showMessage(message, 'success', '#27ae60');
-    }
 
-    showError(message) {
-        this.showMessage(message, 'error', '#e74c3c');
-    }
-
-    showInfo(message) {
-        this.showMessage(message, 'info', '#3498db');
-    }
-
-    showMessage(message, type, color) {
-        // Create message element
-        const messageDiv = document.createElement('div');
-        messageDiv.className = `status-message ${type}`;
-        messageDiv.textContent = message;
-        messageDiv.style.background = color + '20';
-        messageDiv.style.border = `1px solid ${color}`;
-        messageDiv.style.color = color;
-        messageDiv.style.padding = '12px';
-        messageDiv.style.borderRadius = '8px';
-        messageDiv.style.marginBottom = '15px';
-        messageDiv.style.textAlign = 'center';
-        messageDiv.style.fontSize = '14px';
-        messageDiv.style.fontWeight = '500';
-
-        // Insert at top of main content
-        const main = document.querySelector('.app-main');
-        main.insertBefore(messageDiv, main.firstChild);
-
-        // Remove after 3 seconds
-        setTimeout(() => {
-            if (messageDiv.parentNode) {
-                messageDiv.parentNode.removeChild(messageDiv);
-            }
-        }, 3000);
-    }
 }
 
 // Initialize app when DOM is loaded
