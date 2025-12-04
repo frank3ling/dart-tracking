@@ -27,6 +27,31 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
 
 ## 🎯 Anforderungen
 
+### Bottom Navigation & Design (v1.5)
+
+#### Bottom Tab-Navigation
+1. **GIVEN** Benutzer navigiert zwischen App-Bereichen
+   **WHEN** Tab-Navigation betrachtet wird
+   **THEN** Navigation ist am unteren Bildschirmrand fixiert
+
+2. **GIVEN** Navigation am Bottom positioniert
+   **WHEN** App verwendet wird
+   **THEN** Mehr Content-Bereich verfügbar, kompaktere Tab-Höhe
+
+#### Harmonische Button-Farben
+3. **GIVEN** Dart-Eingabe Buttons werden betrachtet
+   **WHEN** Single/Double/Triple Buttons angezeigt werden
+   **THEN** Dezentes Grau (#5a5a5a) für einheitliches Design
+
+4. **GIVEN** Miss-Button wird betrachtet
+   **WHEN** Button angezeigt wird
+   **THEN** Sanftes Rot (#a85a5a) hebt sich ab, aber nicht zu kräftig
+
+#### Gesamtstatistik in Daten-Tab
+5. **GIVEN** Daten-Seite wird betrachtet
+   **WHEN** Unter Historie gescrollt wird
+   **THEN** "Gesamt: X Würfe" Summary angezeigt
+
 ### Tab-Navigation (v1.4)
 
 #### Moderne Tab-Navigation
@@ -171,13 +196,11 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
 #### Eingabe-Seite (index.html)
 ```
 ┌─────────────────────┐
-│🎯Play │📊Stats│🗂️Data│ ← Tab Navigation (sticky)
-├─────────────────────┤
 │ Aktueller Wurf   ↶ │ ← Titel + Zurück-Button rechts
 │     - / - / -       │   Vereinfachter Display
 ├─────────────────────┤
-│  ┌──────┐ ┌──────┐  │ ← Single, Double (2x2 Grid)
-│  │Single│ │Double│  │   Clean Labels ohne Punkte
+│  ┌──────┐ ┌──────┐  │ ← Single, Double (dezentes Grau)
+│  │Single│ │Double│  │   Triple (dezent), Miss (sanft rot)
 │  ├──────┤ ├──────┤  │
 │  │Triple│ │ Miss │  │
 │  └──────┘ └──────┘  │
@@ -188,29 +211,33 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
 ├─────────────────────┤
 │   Trainingsziel      │ ← Dropdown inline
 │  [Aktuelles Ziel: 20▼]│
+├─────────────────────┤
+│🎯Play│📊Stats│🗂️Data│ ← Bottom Tab Navigation
 └─────────────────────┘
 ```
 
 #### Statistik-Seite (stats.html)  
 ```
 ┌─────────────────────┐
-│🎯Play │📊Stats│🗂️Data│ ← Tab Navigation
-├─────────────────────┤
-│    Gesamtstatistik   │ ← Darts, Würfe, Ø Punkte
+│    Gesamtstatistik   │ ← Mehr Platz durch Bottom-Nav
 │    Wurf-Kategorien   │ ← 0, 60+, 80+, 100+, etc.
 │    Letzte 10 Würfe   │ ← Detailanalyse
 │  Genauigkeit/Position│ ← Pro Dart-Position
+├─────────────────────┤
+│🎯Play│📊Stats│🗂️Data│ ← Bottom Tab Navigation
 └─────────────────────┘
 ```
 
 #### Daten-Seite (data.html)
 ```
 ┌─────────────────────┐
-│🎯Play │📊Stats│🗂️Data│ ← Tab Navigation
-├─────────────────────┤
 │  Letzte 10 Würfe    │ ← Historie mit Lösch-Option
 │  20 / 0 / D20  [✕]  │   Nur einzelne Würfe löschbar
 │  60p • 01.01.25     │   Einfache Bestätigung
+│                     │
+│  Gesamt: 127 Würfe  │ ← Neue Gesamtstatistik
+├─────────────────────┤
+│🎯Play│📊Stats│🗂️Data│ ← Bottom Tab Navigation
 └─────────────────────┘
 ```
 
@@ -305,6 +332,15 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
 
 ### Changelog
 
+#### v1.5.0 (2025-12-04) - Bottom Navigation & Design
+- Tab-Navigation an den unteren Bildschirmrand verschoben
+- Kompaktere Tab-Höhe (8px Padding statt 12px)
+- Harmonische Button-Farben: Single/Double/Triple in dezentem Grau
+- Miss-Button in sanftem Rot (nicht mehr kräftig)
+- Gesamtstatistik "Gesamt: X Würfe" in Daten-Seite
+- Mehr Content-Bereich durch Bottom-Navigation
+- Mobile-First Design wie native Apps
+
 #### v1.4.0 (2025-12-04) - Tab-Navigation
 - Moderne Tab-Navigation ersetzt Header
 - 3 Tabs: Play 🎯 | Stats 📊 | Data 🗂️
@@ -347,22 +383,23 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
 
 ### Entwicklung
 - [x] Drei separate HTML-Seiten (Play/Stats/Data)
-- [x] Tab-Navigation mit Material Design
+- [x] Bottom Tab-Navigation mit Material Design
 - [x] Responsive Design für Pixel 7a
-- [x] Dunkles Farbschema implementiert
+- [x] Harmonisches Farbschema (dezente Grautöne)
 - [x] IndexedDB Integration
 - [x] Offline-Funktionalität
 - [x] Touch-optimierte UI
 
 ### Funktionalität
 - [x] Zielauswahl (1-20, 25) per Dropdown
-- [x] 4-Button Eingabe (Single/Double/Triple/Miss)
+- [x] 4-Button Eingabe mit harmonischen Farben
 - [x] Live Wurf-Tracking: "- / - / -" Format
 - [x] Automatische Speicherung nach 3 Darts
 - [x] Historie letzte Würfe mit Zeitstempel
 - [x] Rückgängig-Funktion für einzelne Darts
 - [x] Einzelwurf-Löschung in Daten-Seite
-- [x] Tab-Navigation zwischen allen Bereichen
+- [x] Bottom Tab-Navigation zwischen allen Bereichen
+- [x] Gesamtstatistik "Gesamt: X Würfe" in Daten-Tab
 - [x] Live-Feedback aktueller Wurf
 - [x] Historie letzte 3 Würfe
 - [x] Rückgängig-Funktion
