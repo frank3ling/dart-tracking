@@ -49,6 +49,15 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
    **WHEN** Einträge angezeigt werden
    **THEN** Nur Dart-Ergebnisse und Zeitstempel, keine Punktzahl
 
+#### Navigation & Stats-Fixes
+5. **GIVEN** Play-Seite wird verwendet
+   **WHEN** Bottom-Navigation betrachtet wird
+   **THEN** Kein Content-Überlappung und vollständig sichtbares Dropdown
+
+6. **GIVEN** Stats-Seite wird geladen
+   **WHEN** Kennzahlen berechnet werden
+   **THEN** Alle Statistiken werden korrekt angezeigt (HTML-ID-Konflikte behoben)
+
 ### Stats-Optimierung (v1.6)
 
 #### Kompakte Statistik-Darstellung
@@ -274,10 +283,10 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
 │  20 / 0 / D20       │   Format mit Leerzeichen
 │  01.01.25           │
 ├─────────────────────┤
-│   Trainingsziel      │ ← Dropdown inline
-│  [Aktuelles Ziel: 20▼]│
+│   Trainingsziel      │ ← Dropdown vollständig sichtbar
+│  [Aktuelles Ziel: 20▼]│   Persistente Auswahl
 ├─────────────────────┤
-│🎯Play│📊Stats│🗂️Data│ ← Bottom Tab Navigation
+│🎯Play│📊Stats│🗂️Data│ ← Bottom Tab Navigation (kein Overlap)
 └─────────────────────┘
 ```
 
@@ -424,6 +433,9 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
 - Smart Data-Liste: Automatische Auffüllung nach Löschung
 - Vereinfachte Data-Darstellung: Punktzahl entfernt
 - Robustes Session-Management für Mobile-Nutzung
+- Play-Seite Bottom-Navigation: Content-Überlappung behoben
+- Stats-Seite Kennzahlen-Fix: HTML-ID-Konflikte behoben
+- Dropdown vollständig sichtbar ohne Abschneiden
 
 #### v1.6.0 (2025-12-04) - Stats-Optimierung
 - Kompakte 3er-Grid Statistik: Darts | Würfe | Hit%
@@ -515,6 +527,9 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
 - [x] Dart-Eingaben Persistenz bei App-Wechsel
 - [x] Smart Data-Liste mit automatischer Auffüllung
 - [x] Vereinfachte Data-Darstellung ohne Punktzahl
+- [x] Bottom-Navigation ohne Content-Überlappung auf allen Seiten
+- [x] Stats-Kennzahlen Berechnung und Anzeige korrekt
+- [x] Dropdown vollständig sichtbar und funktional
 - [x] Live-Feedback aktueller Wurf
 - [x] Historie letzte 3 Würfe
 - [x] Rückgängig-Funktion
