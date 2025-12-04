@@ -205,3 +205,17 @@ async function clearAllData() {
 document.addEventListener('DOMContentLoaded', () => {
     window.dartStatsApp = new DartStatisticsApp();
 });
+
+// Auto-refresh when page becomes visible
+document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && window.dartStatsApp) {
+        window.dartStatsApp.refreshData();
+    }
+});
+
+// Refresh on page focus
+window.addEventListener('focus', () => {
+    if (window.dartStatsApp) {
+        window.dartStatsApp.refreshData();
+    }
+});

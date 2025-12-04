@@ -27,6 +27,28 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
 
 ## 🎯 Anforderungen
 
+### Session-Management & UX-Fixes (v1.7)
+
+#### Persistente Ziel-Auswahl
+1. **GIVEN** Benutzer wählt ein Trainingsziel
+   **WHEN** Browser-Reload erfolgt
+   **THEN** Ausgewähltes Ziel bleibt erhalten (localStorage)
+
+#### Dart-Eingaben Persistenz
+2. **GIVEN** Benutzer hat Darts eingegeben aber Wurf nicht beendet
+   **WHEN** App-Wechsel oder Reload erfolgt
+   **THEN** Eingegebene Darts werden wiederhergestellt
+
+#### Smart Data-Liste
+3. **GIVEN** Eintrag in Data-Tab wird gelöscht
+   **WHEN** Liste aktualisiert wird
+   **THEN** Automatische Auffüllung auf 10 Einträge (wenn verfügbar)
+
+#### Vereinfachte Data-Darstellung
+4. **GIVEN** Data-Tab Historie wird betrachtet
+   **WHEN** Einträge angezeigt werden
+   **THEN** Nur Dart-Ergebnisse und Zeitstempel, keine Punktzahl
+
 ### Stats-Optimierung (v1.6)
 
 #### Kompakte Statistik-Darstellung
@@ -47,15 +69,28 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
    **WHEN** Liste betrachtet wird
    **THEN** 0/100+/140+/180 als kompakte Liste darunter
 
+5. **GIVEN** Genauigkeit nach Pfeil-Position wird betrachtet
+   **WHEN** Sektion angezeigt wird
+   **THEN** Integration in "Letzte 10 Würfe" als dritter Bereich
+
 #### Einheitliche Listenhöhen
-5. **GIVEN** Beide Listen werden betrachtet
+6. **GIVEN** Beide Listen werden betrachtet
    **WHEN** Zeilenhöhen verglichen werden
    **THEN** Identische Proportionen für visuellen Zusammenhang
 
 #### Popup-freie Oberfläche
-6. **GIVEN** Stats-Seite wird verwendet
+7. **GIVEN** Stats-Seite wird verwendet
    **WHEN** Aktionen ausgeführt werden
    **THEN** Keine störenden Popup-Nachrichten mehr
+
+#### Auto-Refresh & Content-Fix
+8. **GIVEN** Stats-Seite wird geladen oder fokussiert
+   **WHEN** Seitenwechsel stattfindet
+   **THEN** Statistiken aktualisieren sich automatisch
+
+9. **GIVEN** Bottom-Navigation wird verwendet
+   **WHEN** Content betrachtet wird
+   **THEN** Kein verdeckter Inhalt durch besseres Padding (100px)
 
 ### Bottom Navigation & Design (v1.5)
 
@@ -283,12 +318,12 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
 ```
 ┌─────────────────────┐
 │  Letzte 10 Würfe    │ ← Historie mit Lösch-Option
-│  20 / 0 / D20  [✕]  │   Nur einzelne Würfe löschbar
-│  60p • 01.01.25     │   Einfache Bestätigung
+│  20 / 0 / D20  [✕]  │   Dart-Ergebnisse + Zeitstempel
+│  04.12.25           │   (Punktzahl entfernt)
 │                     │
-│  Gesamt: 127 Würfe  │ ← Neue Gesamtstatistik
+│  Gesamt: 127 Würfe  │ ← Gesamtstatistik aus IndexedDB
 ├─────────────────────┤
-│🎯Play│📊Stats│🗂️Data│ ← Bottom Tab Navigation
+│🎯Play│📊Stats│🗂️Data│ ← Bottom Navigation
 └─────────────────────┘
 ```
 
@@ -383,14 +418,25 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
 
 ### Changelog
 
+#### v1.7.0 (2025-12-04) - Session-Management & UX-Fixes
+- Persistente Ziel-Auswahl mit localStorage
+- Dart-Eingaben Persistenz bei App-Wechsel/Reload
+- Smart Data-Liste: Automatische Auffüllung nach Löschung
+- Vereinfachte Data-Darstellung: Punktzahl entfernt
+- Robustes Session-Management für Mobile-Nutzung
+
 #### v1.6.0 (2025-12-04) - Stats-Optimierung
 - Kompakte 3er-Grid Statistik: Darts | Würfe | Hit%
 - Wurf-Kategorien als kompakte Liste mit neuen Labels (60+ statt 60-79)
 - "Letzte 10 Würfe" umstrukturiert: Dart-Types in 4er-Grid
 - Wurf-Ergebnisse (0/100+/140+/180) als einheitliche Liste
+- Genauigkeit nach Pfeil-Position in "Letzte 10 Würfe" integriert
 - Identische Zeilenhöhen für visuellen Zusammenhang
 - Alle Popups aus Stats-Seite entfernt
 - Doppelte Sektionen bereinigt
+- Auto-Refresh bei Seitenwechsel und Fokus
+- Bottom-Navigation Padding-Fix (100px) für vollständig sichtbaren Content
+- Gesamtstatistik in Data-Tab als Info über IndexedDB-Umfang
 
 #### v1.5.0 (2025-12-04) - Bottom Navigation & Design
 - Tab-Navigation an den unteren Bildschirmrand verschoben
@@ -462,6 +508,13 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
 - [x] Gesamtstatistik "Gesamt: X Würfe" in Daten-Tab
 - [x] Kompakte Stats-Darstellung mit optimierten Listen
 - [x] Umstrukturierte "Letzte 10 Würfe" mit 4er-Grid und Liste
+- [x] Genauigkeit nach Pfeil-Position in "Letzte 10 Würfe" integriert
+- [x] Auto-Refresh für Stats bei Seitenwechsel
+- [x] Content-Padding-Fix für Bottom-Navigation (100px)
+- [x] Persistente Ziel-Auswahl (localStorage)
+- [x] Dart-Eingaben Persistenz bei App-Wechsel
+- [x] Smart Data-Liste mit automatischer Auffüllung
+- [x] Vereinfachte Data-Darstellung ohne Punktzahl
 - [x] Live-Feedback aktueller Wurf
 - [x] Historie letzte 3 Würfe
 - [x] Rückgängig-Funktion
