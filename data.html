@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Dart Daten</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Additional styles for data management page */
+        .delete-item-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-width: 24px;
+            min-height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .delete-item-btn:hover {
+            background: #c0392b;
+            transform: scale(1.1);
+        }
+
+        .history-item-with-delete {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 15px;
+            margin-bottom: 6px;
+            background: #2c2c2c;
+            border-radius: 6px;
+            border-left: 3px solid #3498db;
+            font-size: 14px;
+        }
+
+        .history-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-grow: 1;
+            margin-right: 10px;
+        }
+
+        .danger-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #e74c3c;
+        }
+
+        .danger-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.2s ease;
+            font-size: 16px;
+        }
+
+        .danger-btn:hover {
+            background: #c0392b;
+            transform: translateY(-1px);
+        }
+
+        .warning-text {
+            color: #e74c3c;
+            margin-bottom: 15px;
+            font-size: 14px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #999;
+            padding: 30px;
+            font-style: italic;
+        }
+
+        @media (max-width: 420px) {
+            .delete-item-btn {
+                min-width: 20px;
+                min-height: 20px;
+                font-size: 10px;
+                padding: 2px 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="app-header">
+        <h1>🗂️ Daten</h1>
+        <div class="header-controls">
+            <a href="index.html" class="nav-button">← Zurück</a>
+            <a href="stats.html" class="nav-button">Statistiken</a>
+        </div>
+    </header>
+
+    <main class="app-main">
+        <!-- Recent Throws with Delete Option -->
+        <section>
+            <h2>Letzte 10 Würfe</h2>
+            <div class="recent-throws-list" id="recentThrowsList">
+                <div class="empty-state">Lade Würfe...</div>
+            </div>
+        </section>
+
+        <!-- Data Management -->
+        <section class="danger-section">
+            <h2>⚠️ Alle Daten löschen</h2>
+            <p class="warning-text">
+                Vorsicht: Diese Aktion kann nicht rückgängig gemacht werden!<br>
+                Alle Trainingseinträge werden dauerhaft gelöscht.
+            </p>
+            <button class="danger-btn" onclick="clearAllData()">
+                🗑️ Alle Daten unwiderruflich löschen
+            </button>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+    <script src="data-management.js"></script>
+</body>
+</html>

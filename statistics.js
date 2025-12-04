@@ -242,11 +242,9 @@ class DartStatisticsApp {
     }
 }
 
-// Global function for clear data button
+// Global function for clear data button - redirects to data management page
 async function clearAllData() {
-    if (window.dartStatsApp) {
-        await window.dartStatsApp.clearAllData();
-    }
+    window.location.href = 'data.html';
 }
 
 // Initialize app when DOM is loaded
