@@ -60,13 +60,13 @@ body {
     background: #e74c3c;
     color: white;
     border: none;
-    padding: 8px;
-    border-radius: 8px;
-    font-size: 18px;
+    padding: 6px;
+    border-radius: 6px;
+    font-size: 16px;
     cursor: pointer;
     transition: all 0.2s ease;
-    min-width: 36px;
-    min-height: 36px;
+    min-width: 32px;
+    min-height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -81,6 +81,51 @@ body {
     opacity: 0.3;
     cursor: not-allowed;
     transform: none;
+}
+
+/* === TAB NAVIGATION === */
+.tab-navigation {
+    display: flex;
+    background: #2c2c2c;
+    border-bottom: 2px solid #3498db;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.tab-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 8px;
+    text-decoration: none;
+    color: #cccccc;
+    transition: all 0.2s ease;
+    border-bottom: 3px solid transparent;
+}
+
+.tab-item:hover {
+    background: #3a3a3a;
+    color: #ffffff;
+}
+
+.tab-item.active {
+    color: #3498db;
+    border-bottom-color: #3498db;
+    background: #3a3a3a;
+}
+
+.tab-icon {
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+
+.tab-label {
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 /* === MAIN CONTENT === */
@@ -106,6 +151,17 @@ section h2 {
     font-size: 18px;
     margin-bottom: 15px;
     font-weight: 600;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.section-header h2 {
+    margin-bottom: 0;
 }
 
 /* === TARGET SELECTION BOTTOM === */
@@ -356,12 +412,22 @@ section h2 {
         border-radius: 0;
     }
     
-    .app-header {
-        padding: 12px 15px;
+    .tab-icon {
+        font-size: 18px;
     }
     
-    .app-header h1 {
-        font-size: 20px;
+    .tab-label {
+        font-size: 11px;
+    }
+    
+    .tab-item {
+        padding: 10px 6px;
+    }
+    
+    .undo-button {
+        min-width: 28px;
+        min-height: 28px;
+        font-size: 14px;
     }
     
     .target-dropdown {

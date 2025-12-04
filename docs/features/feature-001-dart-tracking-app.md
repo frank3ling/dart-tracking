@@ -27,6 +27,26 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
 
 ## 🎯 Anforderungen
 
+### Tab-Navigation (v1.4)
+
+#### Moderne Tab-Navigation
+1. **GIVEN** Benutzer navigiert zwischen App-Bereichen
+   **WHEN** Tab-Navigation betrachtet wird
+   **THEN** 3 Tabs verfügbar: Play 🎯 | Stats 📊 | Data 🗂️
+
+2. **GIVEN** Benutzer ist auf einer Seite
+   **WHEN** Tab betrachtet wird
+   **THEN** Aktiver Tab hat blaue Unterline + blaue Schrift
+
+#### Zurück-Button repositioniert
+3. **GIVEN** Benutzer macht Dart-Eingabefehler
+   **WHEN** Aktueller Wurf Sektion betrachtet wird
+   **THEN** Zurück-Button (↶) rechts neben Überschrift positioniert
+
+4. **GIVEN** Button im Kontext der Dart-Eingabe
+   **WHEN** Benutzer interagiert
+   **THEN** Nur letzte Dart-Eingabe wird zurückgesetzt, nie DB-Daten
+
 ### Daten-Management (v1.3)
 
 #### Neue Daten-Seite
@@ -39,15 +59,15 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
    **WHEN** "✕" Button neben einem Wurf geklickt wird  
    **THEN** Dieser spezifische Wurf wird nach Bestätigung aus IndexedDB gelöscht
 
-#### Alle-Daten-Löschen verschoben
-3. **GIVEN** Alle Daten sollen gelöscht werden
-   **WHEN** Funktion aufgerufen wird
-   **THEN** Doppelte Sicherheitsabfrage mit Text-Eingabe "ALLES LÖSCHEN"
+#### Alle-Daten-Löschen entfernt
+3. **GIVEN** Daten-Seite wird betrachtet
+   **WHEN** Benutzer sucht Lösch-Optionen
+   **THEN** Nur individuelle Wurf-Löschung verfügbar, keine Komplett-Löschung
 
 #### Navigation erweitert
 4. **GIVEN** Benutzer navigiert zwischen Seiten
-   **WHEN** Header betrachtet wird
-   **THEN** Alle drei Hauptbereiche sind erreichbar: Training | Statistiken | Daten
+   **WHEN** Tab-Navigation betrachtet wird
+   **THEN** Alle drei Hauptbereiche sind per Tabs erreichbar
 
 #### Zurück-Button optimiert
 5. **GIVEN** Benutzer macht Eingabefehler
@@ -151,10 +171,10 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
 #### Eingabe-Seite (index.html)
 ```
 ┌─────────────────────┐
-│ HEADER              │ ← Titel, Navigation (Statistiken|Daten), Zurück-Icon
+│🎯Play │📊Stats│🗂️Data│ ← Tab Navigation (sticky)
 ├─────────────────────┤
-│   Aktueller Wurf    │ ← Vereinfachter Display
-│     - / - / -       │   Format: Dart1/Dart2/Dart3 (kompakt)
+│ Aktueller Wurf   ↶ │ ← Titel + Zurück-Button rechts
+│     - / - / -       │   Vereinfachter Display
 ├─────────────────────┤
 │  ┌──────┐ ┌──────┐  │ ← Single, Double (2x2 Grid)
 │  │Single│ │Double│  │   Clean Labels ohne Punkte
@@ -172,20 +192,25 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
 ```
 
 #### Statistik-Seite (stats.html)  
-- Gesamtstatistiken & Kategorien
-- Navigation: ← Zurück | Daten
+```
+┌─────────────────────┐
+│🎯Play │📊Stats│🗂️Data│ ← Tab Navigation
+├─────────────────────┤
+│    Gesamtstatistik   │ ← Darts, Würfe, Ø Punkte
+│    Wurf-Kategorien   │ ← 0, 60+, 80+, 100+, etc.
+│    Letzte 10 Würfe   │ ← Detailanalyse
+│  Genauigkeit/Position│ ← Pro Dart-Position
+└─────────────────────┘
+```
 
 #### Daten-Seite (data.html)
 ```
 ┌─────────────────────┐
-│ HEADER              │ ← Titel, Navigation (← Zurück|Statistiken)
+│🎯Play │📊Stats│🗂️Data│ ← Tab Navigation
 ├─────────────────────┤
 │  Letzte 10 Würfe    │ ← Historie mit Lösch-Option
-│  20 / 0 / D20  [✕]  │   Einzelne Würfe löschbar
-│  60p • 01.01.25     │
-├─────────────────────┤
-│ ⚠️ Alle Daten löschen│ ← Danger Zone
-│ [🗑️ Unwiderruflich]  │   Doppelte Sicherheitsabfrage
+│  20 / 0 / D20  [✕]  │   Nur einzelne Würfe löschbar
+│  60p • 01.01.25     │   Einfache Bestätigung
 └─────────────────────┘
 ```
 
@@ -278,12 +303,51 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
 └── data-management.js      // Datenverwaltung (neu v1.3)
 ```
 
+### Changelog
+
+#### v1.4.0 (2025-12-04) - Tab-Navigation
+- Moderne Tab-Navigation ersetzt Header
+- 3 Tabs: Play 🎯 | Stats 📊 | Data 🗂️
+- Zurück-Button in "Aktueller Wurf" Sektion verschoben
+- Sticky Navigation auf allen Seiten
+- Material Design Tab-Layout mit Icons
+- Responsive Design für Mobile
+
+#### v1.3.0 (2025-12-04) - Daten-Management
+- Neue Daten-Seite (data.html) für Datenverwaltung
+- Einzelwurf-Löschung mit ✕ Button
+- Alle-Daten-Löschen komplett entfernt
+- Tab-Navigation System implementiert
+- Zurück-Button nur für Dart-Eingaben (kein DB-Löschen)
+- Smart Button-Zustand (disabled bei leerem Wurf)
+- Ladeverhalten behoben (await loadRecentThrows)
+- Popup-Nachrichten auf allen Seiten entfernt
+
+#### v1.2.0 (2025-12-04) - UI-Feinschliff
+- Popup-Nachrichten komplett entfernt (stabiles Layout)
+- Historie kompakter: "20 / D20 / 0" mit Leerzeichen
+- Trainingsziel inline auf Pixel 7a
+- Wurf-Display 10% kleiner (bessere Proportionen)
+
+#### v1.1.0 (2025-12-04) - UI-Verbesserungen  
+- Dropdown für Zielauswahl (platzsparend)
+- Vereinfachter Wurf-Display: "- / - / -"
+- Clean Button-Design ohne Punkte-Anzeige
+- Responsive Header-Layout
+
+#### v1.0.0 (2025-12-04) - Initial Release
+- Grundlegende Wurf-Eingabe mit IndexedDB
+- Vollständige Statistiken mit Kategorien
+- Mobile-optimiertes UI für Pixel 7a
+- Offline-Funktionalität
+
 ---
 
 ## 📋 Definition of Done
 
 ### Entwicklung
-- [x] Zwei separate HTML-Seiten (Eingabe + Statistik)
+- [x] Drei separate HTML-Seiten (Play/Stats/Data)
+- [x] Tab-Navigation mit Material Design
 - [x] Responsive Design für Pixel 7a
 - [x] Dunkles Farbschema implementiert
 - [x] IndexedDB Integration
@@ -291,8 +355,14 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
 - [x] Touch-optimierte UI
 
 ### Funktionalität
-- [x] Zielauswahl (1-20, 25)
+- [x] Zielauswahl (1-20, 25) per Dropdown
 - [x] 4-Button Eingabe (Single/Double/Triple/Miss)
+- [x] Live Wurf-Tracking: "- / - / -" Format
+- [x] Automatische Speicherung nach 3 Darts
+- [x] Historie letzte Würfe mit Zeitstempel
+- [x] Rückgängig-Funktion für einzelne Darts
+- [x] Einzelwurf-Löschung in Daten-Seite
+- [x] Tab-Navigation zwischen allen Bereichen
 - [x] Live-Feedback aktueller Wurf
 - [x] Historie letzte 3 Würfe
 - [x] Rückgängig-Funktion
