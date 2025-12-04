@@ -1,0 +1,443 @@
+/* === GLOBAL STYLES === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #1a1a1a;
+    color: #ffffff;
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+/* === HEADER === */
+.app-header {
+    background: linear-gradient(135deg, #2c2c2c, #3a3a3a);
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #3498db;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.app-header h1 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #3498db;
+}
+
+.header-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.nav-button {
+    background: #3498db;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.nav-button:hover {
+    background: #2980b9;
+    transform: translateY(-1px);
+}
+
+.undo-button {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.undo-button:hover {
+    background: #c0392b;
+    transform: translateY(-1px);
+}
+
+.undo-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* === MAIN CONTENT === */
+.app-main {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #2c2c2c;
+    min-height: calc(100vh - 70px);
+}
+
+/* === SECTIONS === */
+section {
+    margin-bottom: 25px;
+    background: #3a3a3a;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid #4a4a4a;
+}
+
+section h2 {
+    color: #3498db;
+    font-size: 18px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+/* === TARGET SELECTION === */
+.target-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.target-btn {
+    aspect-ratio: 1;
+    border: 2px solid #555;
+    border-radius: 8px;
+    background: #4a4a4a;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+}
+
+.target-btn:hover {
+    border-color: #3498db;
+    background: #555;
+}
+
+.target-btn.active {
+    background: #3498db;
+    border-color: #2980b9;
+    color: white;
+    transform: scale(0.95);
+}
+
+.selected-target {
+    text-align: center;
+    padding: 10px;
+    background: #2c2c2c;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+.selected-target strong {
+    color: #3498db;
+    font-size: 20px;
+}
+
+/* === CURRENT THROW DISPLAY === */
+.throw-display {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 15px 0;
+    background: #2c2c2c;
+    border-radius: 8px;
+}
+
+.dart-status {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.dart-number {
+    background: #555;
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.dart-result {
+    font-size: 18px;
+    font-weight: bold;
+    min-width: 60px;
+    text-align: center;
+    padding: 8px;
+    background: #4a4a4a;
+    border-radius: 6px;
+    color: #cccccc;
+}
+
+.dart-status.completed .dart-number {
+    background: #27ae60;
+}
+
+.dart-status.completed .dart-result {
+    background: #27ae60;
+    color: white;
+}
+
+/* === INPUT BUTTONS === */
+.input-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 12px;
+}
+
+.input-btn {
+    aspect-ratio: 1;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: bold;
+    min-height: 80px;
+    position: relative;
+    overflow: hidden;
+}
+
+.input-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, transparent, rgba(255,255,255,0.1));
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.input-btn:hover::before {
+    opacity: 1;
+}
+
+.input-btn:active {
+    transform: scale(0.95);
+}
+
+.single-btn {
+    background: #27ae60;
+    color: white;
+}
+
+.double-btn {
+    background: #f39c12;
+    color: white;
+}
+
+.triple-btn {
+    background: #9b59b6;
+    color: white;
+}
+
+.miss-btn {
+    background: #e74c3c;
+    color: white;
+}
+
+.btn-label {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.btn-points {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.input-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* === HISTORY === */
+.history-list {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    margin-bottom: 8px;
+    background: #2c2c2c;
+    border-radius: 8px;
+    border-left: 4px solid #3498db;
+    font-size: 14px;
+}
+
+.history-throws {
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.history-meta {
+    color: #cccccc;
+    font-size: 12px;
+}
+
+.history-placeholder {
+    text-align: center;
+    color: #999;
+    padding: 20px;
+    font-style: italic;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 420px) {
+    .app-main {
+        padding: 15px;
+        margin: 0;
+        border-radius: 0;
+    }
+    
+    .app-header {
+        padding: 15px;
+    }
+    
+    .app-header h1 {
+        font-size: 20px;
+    }
+    
+    .target-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .input-buttons {
+        gap: 10px;
+    }
+    
+    .input-btn {
+        min-height: 70px;
+    }
+}
+
+@media (max-width: 360px) {
+    .target-grid {
+        gap: 6px;
+    }
+    
+    .target-btn {
+        font-size: 14px;
+        min-height: 44px;
+    }
+    
+    .input-buttons {
+        gap: 8px;
+    }
+    
+    .input-btn {
+        min-height: 60px;
+    }
+    
+    .btn-label {
+        font-size: 14px;
+    }
+    
+    .btn-points {
+        font-size: 12px;
+    }
+}
+
+/* === SCROLLBAR STYLING === */
+.history-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.history-list::-webkit-scrollbar-track {
+    background: #2c2c2c;
+    border-radius: 3px;
+}
+
+.history-list::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 3px;
+}
+
+.history-list::-webkit-scrollbar-thumb:hover {
+    background: #777;
+}
+
+/* === ANIMATIONS === */
+@keyframes slideInUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.history-item {
+    animation: slideInUp 0.3s ease;
+}
+
+/* === ACCESSIBILITY === */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* === FOCUS STATES === */
+.target-btn:focus,
+.input-btn:focus,
+.nav-button:focus,
+.undo-button:focus {
+    outline: 2px solid #3498db;
+    outline-offset: 2px;
+}
+
+/* === HIGH CONTRAST MODE === */
+@media (prefers-contrast: high) {
+    .app-header {
+        border-bottom-width: 3px;
+    }
+    
+    section {
+        border-width: 2px;
+    }
+    
+    .target-btn,
+    .input-btn {
+        border-width: 2px;
+    }
+}
