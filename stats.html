@@ -22,11 +22,22 @@
         }
 
         .stat-card {
-            background: #2c2c2c;
-            border: 1px solid #4a4a4a;
-            border-radius: 8px;
+            background: #4a4a4a;
             padding: 15px;
+            border-radius: 10px;
             text-align: center;
+            border: 2px solid #555;
+            transition: all 0.2s ease;
+        }
+
+        .stat-card:hover {
+            border-color: #3498db;
+            transform: translateY(-2px);
+        }
+
+        .stat-card.highlight {
+            border-color: #e74c3c;
+            background: #5a3a3a;
         }
 
         .stat-value {
@@ -37,81 +48,53 @@
         }
 
         .stat-label {
-            font-size: 12px;
             color: #cccccc;
+            font-size: 12px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .stat-card.highlight {
-            border-color: #3498db;
-            background: linear-gradient(135deg, #2c2c2c, #3498db10);
+            letter-spacing: 1px;
         }
 
         .progress-bar {
             width: 100%;
-            height: 8px;
-            background: #4a4a4a;
-            border-radius: 4px;
+            height: 6px;
+            background: #2c2c2c;
+            border-radius: 3px;
             margin-top: 8px;
             overflow: hidden;
         }
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #27ae60, #3498db);
-            border-radius: 4px;
+            background: #3498db;
             transition: width 0.3s ease;
         }
 
+        /* Accuracy grid */
         .accuracy-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-top: 15px;
+            display: flex;
+            justify-content: space-around;
+            gap: 15px;
         }
 
         .accuracy-item {
-            background: #2c2c2c;
-            border-radius: 6px;
-            padding: 10px;
+            flex: 1;
+            background: #4a4a4a;
+            padding: 15px;
+            border-radius: 10px;
             text-align: center;
-            border: 1px solid #4a4a4a;
+            border: 2px solid #555;
         }
 
         .accuracy-dart {
-            font-size: 14px;
             color: #cccccc;
-            margin-bottom: 5px;
+            font-size: 12px;
+            margin-bottom: 8px;
         }
 
         .accuracy-percent {
+            color: #3498db;
             font-size: 18px;
             font-weight: bold;
-            color: #27ae60;
-        }
-
-        .reset-section {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #4a4a4a;
-        }
-
-        .danger-btn {
-            background: #e74c3c;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-            transition: all 0.2s ease;
-        }
-
-        .danger-btn:hover {
-            background: #c0392b;
-            transform: translateY(-1px);
         }
 
         /* Compact stats grid */
@@ -138,8 +121,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
-            margin-bottom: 6px;
+            padding: 6px 12px;
+            margin-bottom: 4px;
             background: #2c2c2c;
             border-radius: 6px;
             border-left: 3px solid #3498db;
@@ -159,9 +142,45 @@
             text-align: right;
         }
 
+        /* Dart types grid for Last 10 throws */
+        .dart-types-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* Throw categories list */
+        .throw-categories-list {
+            margin-top: 15px;
+        }
+
+        .throw-categories-list h3 {
+            color: #3498db;
+            font-size: 16px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .category-item-compact {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 12px;
+            margin-bottom: 4px;
+            background: #2c2c2c;
+            border-radius: 6px;
+            border-left: 3px solid #3498db;
+        }
+
         @media (max-width: 360px) {
             .stats-large-grid {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .dart-types-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
             }
             
             .stat-value {
@@ -190,7 +209,7 @@
                 </div>
                 <div class="stat-card">
                     <div class="stat-value" id="overallAccuracy">0%</div>
-                    <div class="stat-label">Trefferquote</div>
+                    <div class="stat-label">Hit%</div>
                 </div>
             </div>
             
@@ -224,61 +243,12 @@
             </div>
         </section>
 
-        <!-- Throw Categories -->
-        <section>
-            <h2>Wurf-Kategorien</h2>
-            <div class="stats-large-grid">
-                <div class="stat-card">
-                    <div class="stat-value" id="zeroCount">0</div>
-                    <div class="stat-label">0 Punkte</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="sixtyPlusCount">0</div>
-                    <div class="stat-label">60-79</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="eightyPlusCount">0</div>
-                    <div class="stat-label">80-99</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="hundredPlusCount">0</div>
-                    <div class="stat-label">100-139</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="hundredFortyPlusCount">0</div>
-                    <div class="stat-label">140-179</div>
-                </div>
-                <div class="stat-card highlight">
-                    <div class="stat-value" id="oneEightyCount">0</div>
-                    <div class="stat-label">180</div>
-                </div>
-            </div>
-        </section>
-
         <!-- Last 10 Throws -->
         <section>
             <h2>Letzte 10 Würfe</h2>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-value" id="lastTenZero">0</div>
-                    <div class="stat-label">0 Punkte</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="lastTenHundredPlus">0</div>
-                    <div class="stat-label">100+</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="lastTenHundredFortyPlus">0</div>
-                    <div class="stat-label">140+</div>
-                </div>
-                <div class="stat-card highlight">
-                    <div class="stat-value" id="lastTenOneEighty">0</div>
-                    <div class="stat-label">180</div>
-                </div>
-            </div>
-
-            <!-- Dart Types in Last 10 Throws -->
-            <div class="stats-large-grid" style="margin-top: 20px;">
+            
+            <!-- Dart Types in one row -->
+            <div class="dart-types-grid">
                 <div class="stat-card">
                     <div class="stat-value" id="lastTenSingle">0</div>
                     <div class="stat-label">Single</div>
@@ -294,6 +264,27 @@
                 <div class="stat-card">
                     <div class="stat-value" id="lastTenMiss">0</div>
                     <div class="stat-label">Miss</div>
+                </div>
+            </div>
+            
+            <!-- Throw categories as list -->
+            <div class="throw-categories-list">
+                <h3>Wurf-Ergebnisse</h3>
+                <div class="category-item-compact">
+                    <span class="category-label">0</span>
+                    <span class="category-value" id="lastTenZero">0</span>
+                </div>
+                <div class="category-item-compact">
+                    <span class="category-label">100+</span>
+                    <span class="category-value" id="lastTenHundredPlus">0</span>
+                </div>
+                <div class="category-item-compact">
+                    <span class="category-label">140+</span>
+                    <span class="category-value" id="lastTenHundredFortyPlus">0</span>
+                </div>
+                <div class="category-item-compact">
+                    <span class="category-label">180</span>
+                    <span class="category-value" id="lastTenOneEighty">0</span>
                 </div>
             </div>
         </section>
@@ -333,126 +324,6 @@
             <span class="tab-label">Data</span>
         </a>
     </nav>
-        <!-- Overall Statistics -->
-        <section>
-            <h2>Gesamtstatistik</h2>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-value" id="totalDarts">0</div>
-                    <div class="stat-label">Darts gesamt</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="totalThrows">0</div>
-                    <div class="stat-label">Würfe gesamt</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="averageScore">0.0</div>
-                    <div class="stat-label">Ø Punkte/Wurf</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="overallAccuracy">0%</div>
-                    <div class="stat-label">Trefferquote</div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="accuracyProgress" style="width: 0%"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Throw Categories -->
-        <section>
-            <h2>Wurf-Kategorien</h2>
-            <div class="stats-large-grid">
-                <div class="stat-card">
-                    <div class="stat-value" id="zeroCount">0</div>
-                    <div class="stat-label">0 Punkte</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="sixtyPlusCount">0</div>
-                    <div class="stat-label">60-79</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="eightyPlusCount">0</div>
-                    <div class="stat-label">80-99</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="hundredPlusCount">0</div>
-                    <div class="stat-label">100-139</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="hundredFortyPlusCount">0</div>
-                    <div class="stat-label">140-179</div>
-                </div>
-                <div class="stat-card highlight">
-                    <div class="stat-value" id="oneEightyCount">0</div>
-                    <div class="stat-label">180</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Last 10 Throws -->
-        <section>
-            <h2>Letzte 10 Würfe</h2>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-value" id="lastTenZero">0</div>
-                    <div class="stat-label">0 Punkte</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="lastTenHundredPlus">0</div>
-                    <div class="stat-label">100+</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="lastTenHundredFortyPlus">0</div>
-                    <div class="stat-label">140+</div>
-                </div>
-                <div class="stat-card highlight">
-                    <div class="stat-value" id="lastTenOneEighty">0</div>
-                    <div class="stat-label">180</div>
-                </div>
-            </div>
-
-            <!-- Dart Types in Last 10 Throws -->
-            <div class="stats-large-grid" style="margin-top: 20px;">
-                <div class="stat-card">
-                    <div class="stat-value" id="lastTenSingle">0</div>
-                    <div class="stat-label">Single</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="lastTenDouble">0</div>
-                    <div class="stat-label">Double</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="lastTenTriple">0</div>
-                    <div class="stat-label">Triple</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="lastTenMiss">0</div>
-                    <div class="stat-label">Miss</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Accuracy by Dart Position -->
-        <section>
-            <h2>Genauigkeit nach Pfeil-Position</h2>
-            <div class="accuracy-grid">
-                <div class="accuracy-item">
-                    <div class="accuracy-dart">1. Pfeil</div>
-                    <div class="accuracy-percent" id="accuracy1">0%</div>
-                </div>
-                <div class="accuracy-item">
-                    <div class="accuracy-dart">2. Pfeil</div>
-                    <div class="accuracy-percent" id="accuracy2">0%</div>
-                </div>
-                <div class="accuracy-item">
-                    <div class="accuracy-dart">3. Pfeil</div>
-                    <div class="accuracy-percent" id="accuracy3">0%</div>
-                </div>
-            </div>
-        </section>
-
-    </main>
 
     <script src="app.js"></script>
     <script src="statistics.js"></script>
