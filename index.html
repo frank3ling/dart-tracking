@@ -9,39 +9,49 @@
 <body>
     <header class="app-header">
         <h1>Dart Tracking</h1>
+        <div class="target-selector-header">
+            <label for="targetSelect">Ziel:</label>
+            <select id="targetSelect" class="target-dropdown">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20" selected>20</option>
+                <option value="25">25 (Bull)</option>
+            </select>
+        </div>
         <div class="header-controls">
             <a href="stats.html" class="nav-button">Statistiken</a>
             <button id="undoBtn" class="undo-button">↶ Zurück</button>
         </div>
     </header>
     <main class="app-main">
-        <!-- Zielauswahl -->
-        <section class="target-selection">
-            <h2>Trainingsziel</h2>
-            <div class="target-grid" id="targetGrid">
-                <!-- Zahlen 1-20 und 25 werden dynamisch generiert -->
-            </div>
-            <div class="selected-target" id="selectedTarget">
-                <span>Ausgewählt: </span><strong id="currentTarget">20</strong>
-            </div>
-        </section>
+
 
         <!-- Aktueller Wurf Status -->
         <section class="current-throw">
             <h2>Aktueller Wurf</h2>
-            <div class="throw-display" id="throwDisplay">
-                <div class="dart-status" data-dart="1">
-                    <span class="dart-number">1</span>
-                    <span class="dart-result" id="dart1Result">?</span>
-                </div>
-                <div class="dart-status" data-dart="2">
-                    <span class="dart-number">2</span>
-                    <span class="dart-result" id="dart2Result">?</span>
-                </div>
-                <div class="dart-status" data-dart="3">
-                    <span class="dart-number">3</span>
-                    <span class="dart-result" id="dart3Result">?</span>
-                </div>
+            <div class="throw-display-simple" id="throwDisplaySimple">
+                <span id="dart1Simple">-</span>
+                <span class="separator">/</span>
+                <span id="dart2Simple">-</span>
+                <span class="separator">/</span>
+                <span id="dart3Simple">-</span>
             </div>
         </section>
 
@@ -50,20 +60,16 @@
             <h2>Wurf eingeben</h2>
             <div class="input-buttons">
                 <button class="input-btn single-btn" data-type="single">
-                    <span class="btn-label">Single</span>
-                    <span class="btn-points" id="singlePoints">20</span>
+                    Single
                 </button>
                 <button class="input-btn double-btn" data-type="double">
-                    <span class="btn-label">Double</span>
-                    <span class="btn-points" id="doublePoints">40</span>
+                    Double
                 </button>
                 <button class="input-btn triple-btn" data-type="triple">
-                    <span class="btn-label">Triple</span>
-                    <span class="btn-points" id="triplePoints">60</span>
+                    Triple
                 </button>
                 <button class="input-btn miss-btn" data-type="miss">
-                    <span class="btn-label">Miss</span>
-                    <span class="btn-points">0</span>
+                    Miss
                 </button>
             </div>
         </section>
