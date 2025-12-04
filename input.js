@@ -15,10 +15,9 @@ class DartInputApp {
     async init() {
         try {
             await dartDB.init();
-            this.loadRecentThrows();
+            await this.loadRecentThrows();
         } catch (error) {
             console.error('Database initialization failed:', error);
-            this.showError('Datenspeicher nicht verfügbar. Daten gehen beim Schließen verloren.');
         }
         
         this.setupUI();
@@ -100,6 +99,9 @@ class DartInputApp {
         if (this.currentThrow.currentDartIndex >= 3) {
             setTimeout(() => this.completeThrow(), 500);
         }
+        
+        // Update undo button state
+        this.updateUndoButton();
     }
 
     async completeThrow() {
@@ -127,6 +129,7 @@ class DartInputApp {
         // Reset for next throw
         this.resetCurrentThrow();
         this.updateHistoryDisplay();
+        this.updateUndoButton();
     }
 
     formatDartForDisplay(dart) {
@@ -198,24 +201,22 @@ class DartInputApp {
     }
 
     async undoLastAction() {
-        // If current throw has darts, undo last dart
+        // Only undo dart inputs, not completed throws
         if (this.currentThrow.currentDartIndex > 0) {
             this.currentThrow.currentDartIndex--;
             this.currentThrow.darts[this.currentThrow.currentDartIndex] = null;
             this.updateThrowDisplay();
-            return;
+            this.updateUndoButton();
         }
+        // No database operations - only undo current throw input
+    }
 
-        // Otherwise, undo last completed throw
-        try {
-            const removedThrow = await dartDB.removeLastThrow();
-            if (removedThrow) {
-                this.recentThrows = this.recentThrows.filter(t => t.id !== removedThrow.id);
-                this.updateHistoryDisplay();
-            }
-        } catch (error) {
-            console.error('Error undoing throw:', error);
-        }
+    updateUndoButton() {
+        const undoBtn = document.getElementById('undoBtn');
+        const hasActiveDarts = this.currentThrow.currentDartIndex > 0;
+        
+        undoBtn.disabled = !hasActiveDarts;
+        undoBtn.style.opacity = hasActiveDarts ? '1' : '0.3';
     }
 
     async loadRecentThrows() {
@@ -233,6 +234,7 @@ class DartInputApp {
     updateDisplay() {
         this.updateHistoryDisplay();
         this.updateThrowDisplay();
+        this.updateUndoButton();
     }
 
     saveCurrentState() {

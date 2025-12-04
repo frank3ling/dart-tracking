@@ -27,6 +27,55 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
 
 ## 🎯 Anforderungen
 
+### Daten-Management (v1.3)
+
+#### Neue Daten-Seite
+1. **GIVEN** Benutzer möchte Daten verwalten
+   **WHEN** "Daten" Button im Header geklickt wird
+   **THEN** Separate Seite (data.html) für Datenverwaltung öffnet sich
+
+#### Einzelwurf-Löschung
+2. **GIVEN** Letzte 10 Würfe werden angezeigt
+   **WHEN** "✕" Button neben einem Wurf geklickt wird  
+   **THEN** Dieser spezifische Wurf wird nach Bestätigung aus IndexedDB gelöscht
+
+#### Alle-Daten-Löschen verschoben
+3. **GIVEN** Alle Daten sollen gelöscht werden
+   **WHEN** Funktion aufgerufen wird
+   **THEN** Doppelte Sicherheitsabfrage mit Text-Eingabe "ALLES LÖSCHEN"
+
+#### Navigation erweitert
+4. **GIVEN** Benutzer navigiert zwischen Seiten
+   **WHEN** Header betrachtet wird
+   **THEN** Alle drei Hauptbereiche sind erreichbar: Training | Statistiken | Daten
+
+#### Zurück-Button optimiert
+5. **GIVEN** Benutzer macht Eingabefehler
+   **WHEN** Zurück-Button (↶) geklickt wird
+   **THEN** Nur letzter Dart wird entfernt, nie gespeicherte Würfe aus DB
+
+#### Ladeverhalten behoben
+6. **GIVEN** App wird neu geladen
+   **WHEN** Seite öffnet
+   **THEN** Historie zeigt sofort letzte Würfe (await loadRecentThrows)
+
+### UI-Feinschliff (v1.2)
+
+#### Popup-Nachrichten entfernt
+1. **GIVEN** Benutzer führt Aktionen aus  
+   **WHEN** Wurf gespeichert oder Dart rückgängig gemacht wird
+   **THEN** Keine störenden Popup-Nachrichten, die Layout verschieben
+
+#### Kompakte Historie & Wurf-Display
+2. **GIVEN** Historie/Wurf-Display wird angezeigt
+   **WHEN** Benutzer betrachtet Interface
+   **THEN** Kompaktere Darstellung: "20 / D20 / 0" + 10% kleinere Schrift
+
+#### Inline Trainingsziel  
+3. **GIVEN** Trainingsziel-Sektion wird angezeigt
+   **WHEN** Auf Pixel 7a betrachtet
+   **THEN** Label und Dropdown in einer Zeile nebeneinander
+
 ### UI-Verbesserungen (v1.1)
 
 #### Zielauswahl-Optimierung
@@ -102,11 +151,10 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
 #### Eingabe-Seite (index.html)
 ```
 ┌─────────────────────┐
-│ HEADER              │ ← Titel, Ziel-Dropdown, Navigation
-│ Dart Tracking [20▼] │   Statistiken | Zurück  
+│ HEADER              │ ← Titel, Navigation (Statistiken|Daten), Zurück-Icon
 ├─────────────────────┤
 │   Aktueller Wurf    │ ← Vereinfachter Display
-│     - / - / -       │   Format: Dart1/Dart2/Dart3
+│     - / - / -       │   Format: Dart1/Dart2/Dart3 (kompakt)
 ├─────────────────────┤
 │  ┌──────┐ ┌──────┐  │ ← Single, Double (2x2 Grid)
 │  │Single│ │Double│  │   Clean Labels ohne Punkte
@@ -114,10 +162,30 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
 │  │Triple│ │ Miss │  │
 │  └──────┘ └──────┘  │
 ├─────────────────────┤
-│     Historie         │ ← Letzte 3 Würfe
-│  20/0/D20 01.01.25  │   Format: Dart1/Dart2/Dart3 Datum
-│  0/S20/T20 01.01.25 │
-│  Miss/S20/0 01.01.25│
+│     Historie         │ ← Letzte 3 Würfe (kompakt)
+│  20 / 0 / D20       │   Format mit Leerzeichen
+│  01.01.25           │
+├─────────────────────┤
+│   Trainingsziel      │ ← Dropdown inline
+│  [Aktuelles Ziel: 20▼]│
+└─────────────────────┘
+```
+
+#### Statistik-Seite (stats.html)  
+- Gesamtstatistiken & Kategorien
+- Navigation: ← Zurück | Daten
+
+#### Daten-Seite (data.html)
+```
+┌─────────────────────┐
+│ HEADER              │ ← Titel, Navigation (← Zurück|Statistiken)
+├─────────────────────┤
+│  Letzte 10 Würfe    │ ← Historie mit Lösch-Option
+│  20 / 0 / D20  [✕]  │   Einzelne Würfe löschbar
+│  60p • 01.01.25     │
+├─────────────────────┤
+│ ⚠️ Alle Daten löschen│ ← Danger Zone
+│ [🗑️ Unwiderruflich]  │   Doppelte Sicherheitsabfrage
 └─────────────────────┘
 ```
 
@@ -200,12 +268,14 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
 ### Dateien-Struktur
 ```
 /
-├── index.html          // Eingabe-Seite
-├── stats.html          // Statistik-Seite  
-├── styles.css          // Shared CSS
-├── app.js             // Shared JS (DB, Utils)
-├── input.js           // Eingabe-Logik
-└── statistics.js      // Statistik-Logik
+├── index.html              // Eingabe-Seite
+├── stats.html              // Statistik-Seite  
+├── data.html               // Daten-Management-Seite (neu v1.3)
+├── styles.css              // Shared CSS
+├── app.js                  // Database & Utils
+├── input.js                // Eingabe-Logik
+├── statistics.js           // Statistik-Berechnungen
+└── data-management.js      // Datenverwaltung (neu v1.3)
 ```
 
 ---
