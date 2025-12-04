@@ -58,6 +58,15 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
    **WHEN** Kennzahlen berechnet werden
    **THEN** Alle Statistiken werden korrekt angezeigt (HTML-ID-Konflikte behoben)
 
+#### Korrekte Stats-Berechnungen
+7. **GIVEN** Wurf-Kategorien werden berechnet
+   **WHEN** 100+ und 140+ Kategorien ausgewertet werden
+   **THEN** Keine doppelte Zählung (100+ = nur 100-139, nicht 140+)
+
+8. **GIVEN** Hit%-Berechnungen erfolgen
+   **WHEN** Unvollständige Würfe vorhanden sind
+   **THEN** Nur tatsächlich geworfene Darts werden gezählt (nicht pauschal 3 pro Wurf)
+
 ### Stats-Optimierung (v1.6)
 
 #### Kompakte Statistik-Darstellung
@@ -436,6 +445,8 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
 - Play-Seite Bottom-Navigation: Content-Überlappung behoben
 - Stats-Seite Kennzahlen-Fix: HTML-ID-Konflikte behoben
 - Dropdown vollständig sichtbar ohne Abschneiden
+- Korrekte Stats-Berechnungen: 100+ Kategorie ohne Doppelzählung
+- Hit%-Berechnung basiert auf tatsächlich geworfenen Darts
 
 #### v1.6.0 (2025-12-04) - Stats-Optimierung
 - Kompakte 3er-Grid Statistik: Darts | Würfe | Hit%
@@ -530,6 +541,8 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
 - [x] Bottom-Navigation ohne Content-Überlappung auf allen Seiten
 - [x] Stats-Kennzahlen Berechnung und Anzeige korrekt
 - [x] Dropdown vollständig sichtbar und funktional
+- [x] Mathematisch korrekte Statistik-Kategorien ohne Doppelzählung
+- [x] Hit%-Berechnung basierend auf tatsächlichen Dart-Anzahlen
 - [x] Live-Feedback aktueller Wurf
 - [x] Historie letzte 3 Würfe
 - [x] Rückgängig-Funktion
