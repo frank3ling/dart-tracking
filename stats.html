@@ -172,6 +172,23 @@
             border-radius: 6px;
             border-left: 3px solid #3498db;
         }
+        
+        /* Accuracy section within Last 10 throws */
+        .accuracy-section {
+            margin-top: 20px;
+        }
+        
+        .accuracy-section h3 {
+            color: #3498db;
+            font-size: 16px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        
+        /* Better bottom padding for navbar */
+        .app-main {
+            padding-bottom: 100px;
+        }
 
         @media (max-width: 360px) {
             .stats-large-grid {
@@ -287,26 +304,27 @@
                     <span class="category-value" id="lastTenOneEighty">0</span>
                 </div>
             </div>
-        </section>
-
-        <!-- Accuracy by Dart Position -->
-        <section>
-            <h2>Genauigkeit nach Pfeil-Position</h2>
-            <div class="accuracy-grid">
-                <div class="accuracy-item">
-                    <div class="accuracy-dart">1. Pfeil</div>
-                    <div class="accuracy-percent" id="accuracy1">0%</div>
-                </div>
-                <div class="accuracy-item">
-                    <div class="accuracy-dart">2. Pfeil</div>
-                    <div class="accuracy-percent" id="accuracy2">0%</div>
-                </div>
-                <div class="accuracy-item">
-                    <div class="accuracy-dart">3. Pfeil</div>
-                    <div class="accuracy-percent" id="accuracy3">0%</div>
+            
+            <!-- Accuracy by Dart Position -->
+            <div class="accuracy-section">
+                <h3>Genauigkeit nach Pfeil-Position</h3>
+                <div class="accuracy-grid">
+                    <div class="accuracy-item">
+                        <div class="accuracy-dart">1. Pfeil</div>
+                        <div class="accuracy-percent" id="accuracy1">0%</div>
+                    </div>
+                    <div class="accuracy-item">
+                        <div class="accuracy-dart">2. Pfeil</div>
+                        <div class="accuracy-percent" id="accuracy2">0%</div>
+                    </div>
+                    <div class="accuracy-item">
+                        <div class="accuracy-dart">3. Pfeil</div>
+                        <div class="accuracy-percent" id="accuracy3">0%</div>
+                    </div>
                 </div>
             </div>
         </section>
+
     </main>
 
     <!-- Tab Navigation (Bottom) -->

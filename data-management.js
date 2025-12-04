@@ -32,6 +32,7 @@ class DataManagementApp {
 
     updateDisplay() {
         this.updateRecentThrowsList();
+        this.updateTotalSummary();
     }
 
     updateRecentThrowsList() {
@@ -47,13 +48,12 @@ class DataManagementApp {
         const listHTML = this.recentThrows.map(throwData => {
             const dartResults = throwData.darts.map(dart => formatDartResult(dart)).join(' / ');
             const timestamp = formatDateTime(new Date(throwData.timestamp));
-            const points = throwData.totalPoints;
             
             return `
                 <div class="history-item-with-delete">
                     <div class="history-content">
                         <div class="history-throws">${dartResults}</div>
-                        <div class="history-meta">${points}p • ${timestamp}</div>
+                        <div class="history-meta">${timestamp}</div>
                     </div>
                     <button class="delete-item-btn" onclick="dataApp.deleteThrow('${throwData.id}')" title="Diesen Wurf löschen">
                         ✕
@@ -64,8 +64,7 @@ class DataManagementApp {
 
         container.innerHTML = listHTML;
         
-        // Update summary with total throws count
-        this.updateTotalSummary();
+        // Update summary is handled by updateDisplay()
     }
 
     async updateTotalSummary() {
@@ -99,8 +98,8 @@ class DataManagementApp {
                 request.onerror = () => reject(request.error);
             });
 
-            // Update local data
-            this.recentThrows = this.recentThrows.filter(t => t.id !== throwId);
+            // Reload the complete list from IndexedDB to fill gaps
+            await this.loadRecentThrows();
             this.updateDisplay();
 
         } catch (error) {

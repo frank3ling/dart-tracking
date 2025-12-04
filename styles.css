@@ -140,9 +140,9 @@ body {
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
-    padding-bottom: 80px;
+    padding-bottom: 100px;
     background: #2c2c2c;
-    min-height: calc(100vh - 80px);
+    min-height: calc(100vh - 100px);
 }
 
 /* === SECTIONS === */

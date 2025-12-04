@@ -21,6 +21,7 @@ class DartInputApp {
         }
         
         this.setupUI();
+        this.loadCurrentState(); // Load saved throw state
         this.updateDisplay();
         this.bindEvents();
     }
@@ -36,14 +37,23 @@ class DartInputApp {
             this.setTarget(parseInt(e.target.value));
         });
         
-        // Set initial target
-        this.currentTarget = parseInt(dropdown.value);
+        // Load saved target or default to 20
+        const savedTarget = localStorage.getItem('dartTarget');
+        if (savedTarget) {
+            this.currentTarget = parseInt(savedTarget);
+            dropdown.value = this.currentTarget;
+        } else {
+            this.currentTarget = parseInt(dropdown.value);
+        }
     }
 
     setTarget(target) {
         this.currentTarget = target;
         const dropdown = document.getElementById('targetSelect');
         dropdown.value = target;
+        
+        // Save target to localStorage
+        localStorage.setItem('dartTarget', target.toString());
     }
 
 
@@ -94,6 +104,7 @@ class DartInputApp {
         this.currentThrow.currentDartIndex++;
 
         this.updateThrowDisplay();
+        this.saveCurrentState(); // Save after each dart
 
         // Auto-complete throw after 3 darts
         if (this.currentThrow.currentDartIndex >= 3) {
@@ -127,6 +138,9 @@ class DartInputApp {
         }
 
         // Reset for next throw
+        this.resetCurrentThrow();
+        this.clearCurrentState(); // Clear saved state after completion
+        this.updateDisplay();
         this.resetCurrentThrow();
         this.updateHistoryDisplay();
         this.updateUndoButton();
@@ -207,6 +221,7 @@ class DartInputApp {
             this.currentThrow.darts[this.currentThrow.currentDartIndex] = null;
             this.updateThrowDisplay();
             this.updateUndoButton();
+            this.saveCurrentState(); // Save after undo
         }
         // No database operations - only undo current throw input
     }
@@ -259,6 +274,12 @@ class DartInputApp {
             this.currentTarget = parseInt(savedTarget);
             localStorage.removeItem('dartAppCurrentTarget');
         }
+    }
+
+    clearCurrentState() {
+        // Clear saved throw state from localStorage
+        localStorage.removeItem('dartAppCurrentThrow');
+        localStorage.removeItem('dartAppCurrentTarget');
     }
 
 
