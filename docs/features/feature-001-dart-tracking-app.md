@@ -67,6 +67,11 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
    **WHEN** Unvollständige Würfe vorhanden sind
    **THEN** Nur tatsächlich geworfene Darts werden gezählt (nicht pauschal 3 pro Wurf)
 
+#### Navigation-Struktur Bereinigung
+9. **GIVEN** Play-Seite wird verwendet
+   **WHEN** Navigation betrachtet wird
+   **THEN** Nur Bottom-Navigation (keine doppelte Top/Bottom-Navigation)
+
 ### Stats-Optimierung (v1.6)
 
 #### Kompakte Statistik-Darstellung
@@ -295,7 +300,7 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
 │   Trainingsziel      │ ← Dropdown vollständig sichtbar
 │  [Aktuelles Ziel: 20▼]│   Persistente Auswahl
 ├─────────────────────┤
-│🎯Play│📊Stats│🗂️Data│ ← Bottom Tab Navigation (kein Overlap)
+│🎯Play│📊Stats│🗂️Data│ ← Bottom Navigation (konsistent mit anderen Seiten)
 └─────────────────────┘
 ```
 
@@ -447,6 +452,7 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
 - Dropdown vollständig sichtbar ohne Abschneiden
 - Korrekte Stats-Berechnungen: 100+ Kategorie ohne Doppelzählung
 - Hit%-Berechnung basiert auf tatsächlich geworfenen Darts
+- Navigation-Struktur bereinigt: Play-Seite nur Bottom-Navigation
 
 #### v1.6.0 (2025-12-04) - Stats-Optimierung
 - Kompakte 3er-Grid Statistik: Darts | Würfe | Hit%
@@ -543,6 +549,7 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
 - [x] Dropdown vollständig sichtbar und funktional
 - [x] Mathematisch korrekte Statistik-Kategorien ohne Doppelzählung
 - [x] Hit%-Berechnung basierend auf tatsächlichen Dart-Anzahlen
+- [x] Konsistente Navigation-Struktur auf allen Seiten (nur Bottom-Navigation)
 - [x] Live-Feedback aktueller Wurf
 - [x] Historie letzte 3 Würfe
 - [x] Rückgängig-Funktion
