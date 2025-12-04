@@ -98,13 +98,21 @@
     </style>
 </head>
 <body>
-    <header class="app-header">
-        <h1>🗂️ Daten</h1>
-        <div class="header-controls">
-            <a href="index.html" class="nav-button">← Zurück</a>
-            <a href="stats.html" class="nav-button">Statistiken</a>
-        </div>
-    </header>
+    <!-- Tab Navigation -->
+    <nav class="tab-navigation">
+        <a href="index.html" class="tab-item">
+            <span class="tab-icon">🎯</span>
+            <span class="tab-label">Play</span>
+        </a>
+        <a href="stats.html" class="tab-item">
+            <span class="tab-icon">📊</span>
+            <span class="tab-label">Stats</span>
+        </a>
+        <a href="data.html" class="tab-item active">
+            <span class="tab-icon">🗂</span>
+            <span class="tab-label">Data</span>
+        </a>
+    </nav>
 
     <main class="app-main">
         <!-- Recent Throws with Delete Option -->
@@ -115,17 +123,6 @@
             </div>
         </section>
 
-        <!-- Data Management -->
-        <section class="danger-section">
-            <h2>⚠️ Alle Daten löschen</h2>
-            <p class="warning-text">
-                Vorsicht: Diese Aktion kann nicht rückgängig gemacht werden!<br>
-                Alle Trainingseinträge werden dauerhaft gelöscht.
-            </p>
-            <button class="danger-btn" onclick="clearAllData()">
-                🗑️ Alle Daten unwiderruflich löschen
-            </button>
-        </section>
     </main>
 
     <script src="app.js"></script>
