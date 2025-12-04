@@ -114,6 +114,51 @@
             transform: translateY(-1px);
         }
 
+        /* Compact stats grid */
+        .stats-compact-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        /* Categories list */
+        .categories-list {
+            margin-top: 20px;
+        }
+
+        .categories-list h3 {
+            color: #3498db;
+            font-size: 16px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .category-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            margin-bottom: 6px;
+            background: #2c2c2c;
+            border-radius: 6px;
+            border-left: 3px solid #3498db;
+        }
+
+        .category-label {
+            color: #cccccc;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .category-value {
+            color: #3498db;
+            font-size: 16px;
+            font-weight: bold;
+            min-width: 30px;
+            text-align: right;
+        }
+
         @media (max-width: 360px) {
             .stats-large-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -131,28 +176,50 @@
 </head>
 <body>
     <main class="app-main">
-        <!-- Overall Statistics -->
+        <!-- Statistics -->
         <section>
-            <h2>Gesamtstatistik</h2>
-            <div class="stats-grid">
+            <h2>Statistiken</h2>
+            <div class="stats-compact-grid">
                 <div class="stat-card">
                     <div class="stat-value" id="totalDarts">0</div>
-                    <div class="stat-label">Darts gesamt</div>
+                    <div class="stat-label">Darts</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-value" id="totalThrows">0</div>
-                    <div class="stat-label">Würfe gesamt</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="averageScore">0.0</div>
-                    <div class="stat-label">Ø Punkte/Wurf</div>
+                    <div class="stat-label">Würfe</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-value" id="overallAccuracy">0%</div>
                     <div class="stat-label">Trefferquote</div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="accuracyProgress" style="width: 0%"></div>
-                    </div>
+                </div>
+            </div>
+            
+            <!-- Wurf-Kategorien als Liste -->
+            <div class="categories-list">
+                <h3>Wurf-Kategorien</h3>
+                <div class="category-item">
+                    <span class="category-label">0</span>
+                    <span class="category-value" id="zeroCount">0</span>
+                </div>
+                <div class="category-item">
+                    <span class="category-label">60+</span>
+                    <span class="category-value" id="sixtyPlusCount">0</span>
+                </div>
+                <div class="category-item">
+                    <span class="category-label">80+</span>
+                    <span class="category-value" id="eightyPlusCount">0</span>
+                </div>
+                <div class="category-item">
+                    <span class="category-label">100+</span>
+                    <span class="category-value" id="hundredPlusCount">0</span>
+                </div>
+                <div class="category-item">
+                    <span class="category-label">140+</span>
+                    <span class="category-value" id="hundredFortyPlusCount">0</span>
+                </div>
+                <div class="category-item">
+                    <span class="category-label">180</span>
+                    <span class="category-value" id="oneEightyCount">0</span>
                 </div>
             </div>
         </section>

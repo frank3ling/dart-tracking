@@ -112,11 +112,9 @@ class DartStatisticsApp {
     }
 
     async refreshData() {
-        this.showInfo('Aktualisiere Statistiken...');
         await this.loadData();
         this.calculateStatistics();
         this.updateDisplay();
-        this.showSuccess('Statistiken aktualisiert');
     }
 
     async clearAllData() {
@@ -171,44 +169,7 @@ class DartStatisticsApp {
         });
     }
 
-    showSuccess(message) {
-        this.showMessage(message, 'success', '#27ae60');
-    }
 
-    showError(message) {
-        this.showMessage(message, 'error', '#e74c3c');
-    }
-
-    showInfo(message) {
-        this.showMessage(message, 'info', '#3498db');
-    }
-
-    showMessage(message, type, color) {
-        // Create message element
-        const messageDiv = document.createElement('div');
-        messageDiv.className = `status-message ${type}`;
-        messageDiv.textContent = message;
-        messageDiv.style.background = color + '20';
-        messageDiv.style.border = `1px solid ${color}`;
-        messageDiv.style.color = color;
-        messageDiv.style.padding = '12px';
-        messageDiv.style.borderRadius = '8px';
-        messageDiv.style.marginBottom = '15px';
-        messageDiv.style.textAlign = 'center';
-        messageDiv.style.fontSize = '14px';
-        messageDiv.style.fontWeight = '500';
-
-        // Insert at top of main content
-        const main = document.querySelector('.app-main');
-        main.insertBefore(messageDiv, main.firstChild);
-
-        // Remove after 3 seconds
-        setTimeout(() => {
-            if (messageDiv.parentNode) {
-                messageDiv.parentNode.removeChild(messageDiv);
-            }
-        }, 3000);
-    }
 
     // Export data for backup (future feature)
     exportData() {
