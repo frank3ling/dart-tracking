@@ -27,9 +27,30 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
 
 ## 🎯 Anforderungen
 
-### Funktionale Anforderungen
+### UI-Verbesserungen (v1.1)
 
-#### Zielauswahl & Eingabe
+#### Zielauswahl-Optimierung
+1. **GIVEN** Benutzer öffnet App
+   **WHEN** Zielauswahl benötigt wird
+   **THEN** Dropdown im Header spart Platz und ist schnell erreichbar
+
+2. **GIVEN** Dropdown ist geöffnet
+   **WHEN** Benutzer wählt neues Ziel
+   **THEN** Ziel wird sofort aktiv und Dropdown schließt sich
+
+#### Vereinfachter Wurf-Display
+3. **GIVEN** Benutzer gibt Darts ein
+   **WHEN** Wurf-Status angezeigt wird
+   **THEN** Format "- / - / -" zeigt kompakt alle 3 Darts
+   
+4. **GIVEN** Dart wurde eingegeben
+   **WHEN** Display aktualisiert wird  
+   **THEN** Format zeigt "T20 / - / -" (T=Triple, D=Double, 0=Miss, B=Bull)
+
+#### Clean Button-Design
+5. **GIVEN** Eingabe-Buttons werden angezeigt
+   **WHEN** Benutzer sieht Interface
+   **THEN** Nur "Single/Double/Triple/Miss" ohne Punkte-Anzeige für sauberes Design
 1. **GIVEN** App ist geöffnet  
    **WHEN** User wählt Trainingsziel (1-20, 25)  
    **THEN** Ziel wird gesetzt und Eingabe aktiviert
@@ -76,18 +97,22 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
 
 ## 🎨 UI/UX Spezifikation
 
-### Layout-Struktur
+#### Layout-Struktur
 
 #### Eingabe-Seite (index.html)
 ```
 ┌─────────────────────┐
-│     HEADER          │ ← Titel, Navigation, Zurücksetzen
+│ HEADER              │ ← Titel, Ziel-Dropdown, Navigation
+│ Dart Tracking [20▼] │   Statistiken | Zurück  
 ├─────────────────────┤
-│   Aktueller Wurf    │ ← Pfeil 1/2/3 Status
+│   Aktueller Wurf    │ ← Vereinfachter Display
+│     - / - / -       │   Format: Dart1/Dart2/Dart3
 ├─────────────────────┤
-│  ┌──┐ ┌──┐ ┌──┐ ┌──┐│ ← Single, Double, Triple, Miss
-│  │S │ │D │ │T │ │M ││   (quadratisch, gleich groß)
-│  └──┘ └──┘ └──┘ └──┘│
+│  ┌──────┐ ┌──────┐  │ ← Single, Double (2x2 Grid)
+│  │Single│ │Double│  │   Clean Labels ohne Punkte
+│  ├──────┤ ├──────┤  │
+│  │Triple│ │ Miss │  │
+│  └──────┘ └──────┘  │
 ├─────────────────────┤
 │     Historie         │ ← Letzte 3 Würfe
 │  20/0/D20 01.01.25  │   Format: Dart1/Dart2/Dart3 Datum

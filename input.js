@@ -27,66 +27,27 @@ class DartInputApp {
     }
 
     setupUI() {
-        this.generateTargetGrid();
-        this.updateTargetSelection();
-        this.updateInputButtons();
+        this.setupTargetDropdown();
         this.updateThrowDisplay();
     }
 
-    generateTargetGrid() {
-        const grid = document.getElementById('targetGrid');
-        grid.innerHTML = '';
-
-        // Numbers 1-20
-        for (let i = 1; i <= 20; i++) {
-            const btn = document.createElement('button');
-            btn.className = 'target-btn';
-            btn.textContent = i;
-            btn.setAttribute('data-target', i);
-            btn.addEventListener('click', () => this.setTarget(i));
-            grid.appendChild(btn);
-        }
-
-        // Add 25 (Bull)
-        const bullBtn = document.createElement('button');
-        bullBtn.className = 'target-btn';
-        bullBtn.textContent = '25';
-        bullBtn.setAttribute('data-target', '25');
-        bullBtn.addEventListener('click', () => this.setTarget(25));
-        grid.appendChild(bullBtn);
+    setupTargetDropdown() {
+        const dropdown = document.getElementById('targetSelect');
+        dropdown.addEventListener('change', (e) => {
+            this.setTarget(parseInt(e.target.value));
+        });
+        
+        // Set initial target
+        this.currentTarget = parseInt(dropdown.value);
     }
 
     setTarget(target) {
         this.currentTarget = target;
-        this.updateTargetSelection();
-        this.updateInputButtons();
+        const dropdown = document.getElementById('targetSelect');
+        dropdown.value = target;
     }
 
-    updateTargetSelection() {
-        // Update active button
-        document.querySelectorAll('.target-btn').forEach(btn => {
-            btn.classList.toggle('active', btn.getAttribute('data-target') == this.currentTarget);
-        });
 
-        // Update display
-        document.getElementById('currentTarget').textContent = this.currentTarget;
-    }
-
-    updateInputButtons() {
-        const singlePoints = calculatePoints(this.currentTarget, 'single');
-        const doublePoints = calculatePoints(this.currentTarget, 'double');
-        const triplePoints = calculatePoints(this.currentTarget, 'triple');
-
-        document.getElementById('singlePoints').textContent = singlePoints;
-        document.getElementById('doublePoints').textContent = doublePoints;
-        document.getElementById('triplePoints').textContent = triplePoints;
-
-        // Enable/disable buttons based on current dart
-        const buttonsDisabled = this.currentThrow.currentDartIndex >= 3;
-        document.querySelectorAll('.input-btn').forEach(btn => {
-            btn.disabled = buttonsDisabled;
-        });
-    }
 
     bindEvents() {
         // Input buttons
@@ -135,7 +96,6 @@ class DartInputApp {
         this.currentThrow.currentDartIndex++;
 
         this.updateThrowDisplay();
-        this.updateInputButtons();
 
         // Auto-complete throw after 3 darts
         if (this.currentThrow.currentDartIndex >= 3) {
@@ -172,33 +132,49 @@ class DartInputApp {
         this.updateHistoryDisplay();
     }
 
+    formatDartForDisplay(dart) {
+        if (dart.type === 'miss') return '0';
+        
+        const target = dart.target === 25 ? 'B' : dart.target;
+        const prefix = dart.type === 'single' ? '' : 
+                      dart.type === 'double' ? 'D' : 'T';
+        
+        return `${prefix}${target}`;
+    }
+
     resetCurrentThrow() {
         this.currentThrow = {
             darts: [null, null, null],
             currentDartIndex: 0
         };
         this.updateThrowDisplay();
-        this.updateInputButtons();
     }
 
     updateThrowDisplay() {
         for (let i = 0; i < 3; i++) {
-            const resultElement = document.getElementById(`dart${i + 1}Result`);
-            const statusElement = document.querySelector(`[data-dart="${i + 1}"]`);
-            
+            const element = document.getElementById(`dart${i + 1}Simple`);
             const dart = this.currentThrow.darts[i];
             
             if (dart) {
-                resultElement.textContent = formatDartResult(dart);
-                statusElement.classList.add('completed');
-            } else if (i === this.currentThrow.currentDartIndex) {
-                resultElement.textContent = '?';
-                statusElement.classList.remove('completed');
+                const displayText = this.formatDartForDisplay(dart);
+                element.textContent = displayText;
+                element.classList.add('dart-completed');
+                if (dart.type === 'miss') {
+                    element.classList.add('dart-miss');
+                } else {
+                    element.classList.remove('dart-miss');
+                }
             } else {
-                resultElement.textContent = '?';
-                statusElement.classList.remove('completed');
+                element.textContent = '-';
+                element.classList.remove('dart-completed', 'dart-miss');
             }
         }
+        
+        // Enable/disable buttons
+        const buttonsDisabled = this.currentThrow.currentDartIndex >= 3;
+        document.querySelectorAll('.input-btn').forEach(btn => {
+            btn.disabled = buttonsDisabled;
+        });
     }
 
     updateHistoryDisplay() {
@@ -230,7 +206,6 @@ class DartInputApp {
             this.currentThrow.currentDartIndex--;
             this.currentThrow.darts[this.currentThrow.currentDartIndex] = null;
             this.updateThrowDisplay();
-            this.updateInputButtons();
             this.showInfo('Letzter Pfeil entfernt');
             return;
         }
@@ -266,7 +241,6 @@ class DartInputApp {
     updateDisplay() {
         this.updateHistoryDisplay();
         this.updateThrowDisplay();
-        this.updateInputButtons();
     }
 
     saveCurrentState() {
