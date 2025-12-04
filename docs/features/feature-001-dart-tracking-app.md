@@ -453,6 +453,7 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
 - Korrekte Stats-Berechnungen: 100+ Kategorie ohne Doppelzählung
 - Hit%-Berechnung basiert auf tatsächlich geworfenen Darts
 - Navigation-Struktur bereinigt: Play-Seite nur Bottom-Navigation
+- Lokales CSS für Play-Seite: 130px Padding + 40px Trainingsziel-Margin
 
 #### v1.6.0 (2025-12-04) - Stats-Optimierung
 - Kompakte 3er-Grid Statistik: Darts | Würfe | Hit%
@@ -550,6 +551,7 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
 - [x] Mathematisch korrekte Statistik-Kategorien ohne Doppelzählung
 - [x] Hit%-Berechnung basierend auf tatsächlichen Dart-Anzahlen
 - [x] Konsistente Navigation-Struktur auf allen Seiten (nur Bottom-Navigation)
+- [x] Lokales CSS für garantiert ausreichende Bottom-Abstände
 - [x] Live-Feedback aktueller Wurf
 - [x] Historie letzte 3 Würfe
 - [x] Rückgängig-Funktion
