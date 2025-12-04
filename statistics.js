@@ -46,14 +46,9 @@ class DartStatisticsApp {
     updateOverallStats() {
         document.getElementById('totalDarts').textContent = this.stats.totalDarts;
         document.getElementById('totalThrows').textContent = this.stats.totalThrows;
-        
-        const avgScore = this.stats.totalThrows > 0 ? 
-            (this.stats.totalPoints / this.stats.totalThrows).toFixed(1) : '0.0';
-        document.getElementById('averageScore').textContent = avgScore;
 
         const accuracyPercent = Math.round(this.stats.accuracy.overall * 100);
         document.getElementById('overallAccuracy').textContent = `${accuracyPercent}%`;
-        document.getElementById('accuracyProgress').style.width = `${accuracyPercent}%`;
     }
 
     updateCategoryStats() {
