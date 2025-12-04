@@ -104,31 +104,32 @@ section h2 {
 }
 
 /* === TARGET SELECTION BOTTOM === */
-.target-selector-bottom {
+.target-selector-inline {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    justify-content: space-between;
     align-items: center;
+    gap: 15px;
 }
 
-.target-selector-bottom label {
+.target-selector-inline label {
     color: #cccccc;
     font-size: 16px;
     font-weight: 500;
+    flex-shrink: 0;
 }
 
 .target-dropdown {
     background: #4a4a4a;
     color: #ffffff;
     border: 2px solid #555;
-    border-radius: 8px;
-    padding: 12px 16px;
-    font-size: 18px;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 16px;
     font-weight: bold;
     cursor: pointer;
-    min-width: 120px;
-    text-align: center;
+    min-width: 100px;
     transition: all 0.2s ease;
+    flex-shrink: 0;
 }
 
 .target-dropdown:focus {
@@ -198,25 +199,25 @@ section h2 {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    padding: 16px;
     background: #2c2c2c;
     border-radius: 12px;
-    font-size: 32px;
+    font-size: 28px;
     font-weight: bold;
     font-family: 'Courier New', monospace;
-    letter-spacing: 8px;
+    letter-spacing: 6px;
     color: #3498db;
 }
 
 .throw-display-simple span {
-    min-width: 40px;
+    min-width: 36px;
     text-align: center;
 }
 
 .separator {
     color: #666;
     font-weight: normal;
-    margin: 0 5px;
+    margin: 0 4px;
 }
 
 .dart-completed {
@@ -317,11 +318,11 @@ section h2 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 15px;
-    margin-bottom: 8px;
+    padding: 8px 15px;
+    margin-bottom: 6px;
     background: #2c2c2c;
-    border-radius: 8px;
-    border-left: 4px solid #3498db;
+    border-radius: 6px;
+    border-left: 3px solid #3498db;
     font-size: 14px;
 }
 
@@ -359,9 +360,17 @@ section h2 {
     }
     
     .target-dropdown {
-        min-width: 100px;
-        font-size: 16px;
-        padding: 10px 14px;
+        min-width: 80px;
+        font-size: 14px;
+        padding: 6px 10px;
+    }
+    
+    .target-selector-inline {
+        gap: 10px;
+    }
+    
+    .target-selector-inline label {
+        font-size: 14px;
     }
     
     .input-buttons {
@@ -375,6 +384,16 @@ section h2 {
 }
 
 @media (max-width: 360px) {
+    .throw-display-simple {
+        font-size: 24px;
+        padding: 12px;
+        letter-spacing: 4px;
+    }
+    
+    .throw-display-simple span {
+        min-width: 30px;
+    }
+    
     .target-grid {
         gap: 6px;
     }
