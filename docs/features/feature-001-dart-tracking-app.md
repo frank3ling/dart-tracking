@@ -27,6 +27,36 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
 
 ## 🎯 Anforderungen
 
+### Stats-Optimierung (v1.6)
+
+#### Kompakte Statistik-Darstellung
+1. **GIVEN** Stats-Seite wird betrachtet
+   **WHEN** Gesamtstatistik angezeigt wird
+   **THEN** 3er-Grid: Darts | Würfe | Hit% (statt Trefferquote)
+
+2. **GIVEN** Wurf-Kategorien werden angezeigt
+   **WHEN** Liste betrachtet wird
+   **THEN** Kompakte Darstellung als Liste mit Labels: 0, 60+, 80+, 100+, 140+, 180
+
+#### Umstrukturierte "Letzte 10 Würfe"
+3. **GIVEN** Letzte 10 Würfe Sektion wird betrachtet
+   **WHEN** Dart-Types angezeigt werden
+   **THEN** Single/Double/Triple/Miss in 4er-Grid (eine Zeile)
+
+4. **GIVEN** Wurf-Ergebnisse werden angezeigt
+   **WHEN** Liste betrachtet wird
+   **THEN** 0/100+/140+/180 als kompakte Liste darunter
+
+#### Einheitliche Listenhöhen
+5. **GIVEN** Beide Listen werden betrachtet
+   **WHEN** Zeilenhöhen verglichen werden
+   **THEN** Identische Proportionen für visuellen Zusammenhang
+
+#### Popup-freie Oberfläche
+6. **GIVEN** Stats-Seite wird verwendet
+   **WHEN** Aktionen ausgeführt werden
+   **THEN** Keine störenden Popup-Nachrichten mehr
+
 ### Bottom Navigation & Design (v1.5)
 
 #### Bottom Tab-Navigation
@@ -219,12 +249,33 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
 #### Statistik-Seite (stats.html)  
 ```
 ┌─────────────────────┐
-│    Gesamtstatistik   │ ← Mehr Platz durch Bottom-Nav
-│    Wurf-Kategorien   │ ← 0, 60+, 80+, 100+, etc.
-│    Letzte 10 Würfe   │ ← Detailanalyse
-│  Genauigkeit/Position│ ← Pro Dart-Position
+│    Statistiken       │ ← Kompakte Gesamtstatistik
+│ ┌─────┬─────┬─────┐  │ ← 3er-Grid: Darts|Würfe|Hit%
+│ │ 12k │ 4.1k│ 78% │  │
+│ └─────┴─────┴─────┘  │
+│                     │
+│ Wurf-Kategorien     │ ← Kompakte Liste
+│ 0        ────── 23  │ ← Niedrigere Zeilen (6px padding)
+│ 60+      ────── 45  │
+│ 80+      ────── 12  │
+│ 100+     ────── 8   │
+│ 140+     ────── 2   │
+│ 180      ────── 1   │
+│                     │
+│ Letzte 10 Würfe     │
+│ ┌──┬──┬──┬────┐     │ ← 4er-Grid: Single|Double|Triple|Miss
+│ │S │D │T │Miss│     │
+│ └──┴──┴──┴────┘     │
+│                     │
+│ Wurf-Ergebnisse     │ ← Liste mit gleicher Zeilenhöhe
+│ 0        ────── 2   │
+│ 100+     ────── 4   │
+│ 140+     ────── 1   │
+│ 180      ────── 0   │
+│                     │
+│ Genauigkeit/Position │
 ├─────────────────────┤
-│🎯Play│📊Stats│🗂️Data│ ← Bottom Tab Navigation
+│🎯Play│📊Stats│🗂️Data│ ← Bottom Navigation
 └─────────────────────┘
 ```
 
@@ -332,6 +383,15 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
 
 ### Changelog
 
+#### v1.6.0 (2025-12-04) - Stats-Optimierung
+- Kompakte 3er-Grid Statistik: Darts | Würfe | Hit%
+- Wurf-Kategorien als kompakte Liste mit neuen Labels (60+ statt 60-79)
+- "Letzte 10 Würfe" umstrukturiert: Dart-Types in 4er-Grid
+- Wurf-Ergebnisse (0/100+/140+/180) als einheitliche Liste
+- Identische Zeilenhöhen für visuellen Zusammenhang
+- Alle Popups aus Stats-Seite entfernt
+- Doppelte Sektionen bereinigt
+
 #### v1.5.0 (2025-12-04) - Bottom Navigation & Design
 - Tab-Navigation an den unteren Bildschirmrand verschoben
 - Kompaktere Tab-Höhe (8px Padding statt 12px)
@@ -400,6 +460,8 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
 - [x] Einzelwurf-Löschung in Daten-Seite
 - [x] Bottom Tab-Navigation zwischen allen Bereichen
 - [x] Gesamtstatistik "Gesamt: X Würfe" in Daten-Tab
+- [x] Kompakte Stats-Darstellung mit optimierten Listen
+- [x] Umstrukturierte "Letzte 10 Würfe" mit 4er-Grid und Liste
 - [x] Live-Feedback aktueller Wurf
 - [x] Historie letzte 3 Würfe
 - [x] Rückgängig-Funktion

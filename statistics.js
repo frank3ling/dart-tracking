@@ -15,7 +15,6 @@ class DartStatisticsApp {
             this.updateDisplay();
         } catch (error) {
             console.error('Failed to initialize statistics:', error);
-            this.showError('Fehler beim Laden der Statistiken');
         }
 
         this.bindEvents();
@@ -132,7 +131,6 @@ class DartStatisticsApp {
 
         const verification = prompt('Geben Sie "LÖSCHEN" ein um zu bestätigen:');
         if (verification !== 'LÖSCHEN') {
-            this.showError('Löschvorgang abgebrochen');
             return;
         }
 
@@ -141,10 +139,8 @@ class DartStatisticsApp {
             this.throws = [];
             this.calculateStatistics();
             this.updateDisplay();
-            this.showSuccess('Alle Daten wurden gelöscht');
         } catch (error) {
             console.error('Error clearing data:', error);
-            this.showError('Fehler beim Löschen der Daten');
         }
     }
 
@@ -174,7 +170,6 @@ class DartStatisticsApp {
     // Export data for backup (future feature)
     exportData() {
         if (this.throws.length === 0) {
-            this.showError('Keine Daten zum Exportieren vorhanden');
             return;
         }
 
@@ -198,8 +193,6 @@ class DartStatisticsApp {
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
-
-        this.showSuccess('Daten exportiert');
     }
 }
 
