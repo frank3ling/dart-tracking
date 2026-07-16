@@ -441,6 +441,21 @@ um **meine Treffgenauigkeit systematisch zu verbessern**.
 
 ### Changelog
 
+#### v1.8.0 (2026-07-16) - Code-Review-Umsetzung, PWA & CI/CD
+- Bugfixes: Triple-Bull gesperrt (existiert nicht), Undo-Race beim Auto-Complete,
+  Stale-State nach Undo, Ziel-Dropdown-Desync, JSON.parse-Absicherung
+- Wurf-Kategorien als lückenlose Bänder inkl. neuer 1–59-Kategorie,
+  ehrliche Labels (60–79 statt 60+)
+- Genauigkeit pro Position basiert auf tatsächlich geworfenen Darts
+- Echte PWA: manifest.json, Service Worker (offline + Auto-Update), Icon
+- Export-Button (JSON-Backup) auf der Daten-Seite
+- Accessibility: Zoom erlaubt, aria-Labels/aria-live, h1 pro Seite,
+  44px-Touch-Targets, Bewertung als Farbe + Text
+- Dateien umbenannt: app.js→shared.js, statistics.js→stats.js, data-management.js→data.js
+- Toter Code entfernt (stats-backup.html, clearAllData, removeLastThrow)
+- Unit-Tests (node --test) für die Statistik-Logik
+- GitHub Actions: CI, Pages-Deploy mit Test-Gate, Release-Workflow
+
 #### v1.7.0 (2025-12-04) - Session-Management & UX-Fixes
 - Persistente Ziel-Auswahl mit localStorage
 - Dart-Eingaben Persistenz bei App-Wechsel/Reload

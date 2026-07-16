@@ -1,129 +1,97 @@
-# Dart Training App
+# 🎯 Dart Training Tracker
 
-Eine mobile Web-App zum Tracken von Dart-Würfen mit detaillierten Statistiken.
+[![CI](https://github.com/frank3ling/dart-tracking/actions/workflows/ci.yml/badge.svg)](https://github.com/frank3ling/dart-tracking/actions/workflows/ci.yml)
+[![Deploy](https://github.com/frank3ling/dart-tracking/actions/workflows/deploy.yml/badge.svg)](https://github.com/frank3ling/dart-tracking/actions/workflows/deploy.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-## 🎯 Features
+Eine mobile Web-App (PWA) zum Tracken von Dart-Trainingswürfen mit detaillierten Statistiken — offline, kostenlos, ohne Anmeldung, ohne Server.
 
-- **Mobile-optimiert** für Pixel 7a mit Chrome
-- **Offline-fähig** - funktioniert ohne Internet
-- **IndexedDB** für dauerhafte Datenspeicherung
-- **Dunkles Design** mit touch-optimierten Buttons
-- **Live-Tracking** von Single/Double/Triple/Miss
-- **Detaillierte Statistiken** mit Kategorien und Genauigkeit
-- **Rückgängig-Funktion** für Korrekturen
+*A mobile-first dart practice tracker PWA: log your training throws, analyze hit rates per dart position, and improve systematically. Works fully offline, no account needed.*
 
-## 📱 Screenshots
+**▶️ Live-Demo / App: https://frank3ling.github.io/dart-tracking/**
 
-### Eingabe-Seite
-- Zielauswahl (1-20, 25)
-- 3-Dart Wurf-Display
-- 4 quadratische Input-Buttons
-- Historie der letzten Würfe
+## Features
 
-### Statistik-Seite  
-- Gesamtstatistiken (Darts, Würfe, Ø Punkte)
-- Wurf-Kategorien (0, 60+, 80+, 100+, 140+, 180)
-- Letzte 10 Würfe Analyse
-- Genauigkeit pro Pfeil-Position
+- **Trainingsziel wählen** (1–20, Bull) und Würfe mit vier Buttons erfassen: Single / Double / Triple / Miss
+- **Detaillierte Statistiken:** Wurf-Kategorien (0, 1–59, 60–79, 80–99, 100–139, 140–179, 180), Trefferquote gesamt und pro Pfeil-Position
+- **Letzte-10-Würfe-Analyse** mit Dart-Typ-Verteilung
+- **Offline-fähig (PWA):** Service Worker + Manifest, installierbar auf dem Homescreen
+- **Lokale Datenhaltung:** Alle Daten bleiben im Browser (IndexedDB), nichts verlässt das Gerät
+- **JSON-Export** als Backup der Trainingsdaten
+- **Rückgängig-Funktion** für Eingabefehler
+- **Dunkles, touch-optimiertes Design**, ausgelegt für Smartphones (entwickelt auf einem Pixel 7a)
 
-## 🚀 Installation
+## Nutzung
 
-1. Repository klonen:
+Einfach die [Web-App öffnen](https://frank3ling.github.io/dart-tracking/) und optional über das Browser-Menü **„Zum Startbildschirm hinzufügen"** installieren — danach funktioniert die App komplett offline.
+
+### Lokal entwickeln
+
 ```bash
-git clone [repository-url]
-cd dart-app-1
+git clone https://github.com/frank3ling/dart-tracking.git
+cd dart-tracking
+npx serve .        # oder ein beliebiger statischer Webserver
 ```
 
-2. `index.html` in Chrome Mobile öffnen
-3. Optional: Als PWA zum Homescreen hinzufügen
+Kein Build-Schritt, keine Dependencies — reines HTML/CSS/JavaScript.
 
-## 💻 Technische Details
+### Tests
 
-### Dateien
-- `index.html` - Eingabe-Seite
-- `stats.html` - Statistik-Seite
-- `styles.css` - Shared CSS Styling
-- `app.js` - Database & Utilities
-- `input.js` - Eingabe-Logik
-- `statistics.js` - Statistik-Berechnungen
+```bash
+node --test 'tests/*.test.js'
+```
 
-### Browser-Unterstützung
-- **Primary:** Chrome Mobile (vollständig)
-- **Secondary:** Firefox Mobile (eingeschränkt)
-- **Requirements:** IndexedDB Support
+## Technik
+
+| Datei | Zweck |
+|---|---|
+| `index.html` + `input.js` | Wurf-Eingabe (Spiel) |
+| `stats.html` + `stats.js` | Statistiken |
+| `data.html` + `data.js` | Datenverwaltung & Export |
+| `shared.js` | IndexedDB-Layer, Utilities, Statistik-Berechnung |
+| `styles.css` | Gemeinsames Styling |
+| `sw.js` + `manifest.json` | PWA (Offline & Installation) |
 
 ### Datenstruktur
+
 ```javascript
 {
   id: "uuid",
   target: 20,
   darts: [
-    {type: "single", hit: true, points: 20},
-    {type: "miss", hit: false, points: 0},
-    {type: "double", hit: true, points: 40}
+    { type: "single", hit: true,  points: 20, target: 20 },
+    { type: "miss",   hit: false, points: 0,  target: 20 },
+    { type: "double", hit: true,  points: 40, target: 20 }
   ],
   totalPoints: 60,
-  timestamp: "2025-12-04T10:30:00.000Z"
+  timestamp: "2026-07-16T10:30:00.000Z"
 }
 ```
 
-## 📊 Statistiken
+### Statistik-Logik
 
-### Wurf-Kategorien
-- **0 Punkte:** Kompletter Fehlwurf
-- **60-79:** Gute Würfe  
-- **80-99:** Sehr gute Würfe
-- **100-139:** Exzellente Würfe
-- **140-179:** Professionelle Würfe
-- **180:** Maximum (Triple 20)
+- **Wurf-Kategorien** sind Punktebänder: 0, 1–59, 60–79, 80–99, 100–139, 140–179, 180
+- **Trefferquote:** getroffene Darts / geworfene Darts, gesamt und je Pfeil-Position (1./2./3. Dart)
+- **Bewertung:** sehr gut (≥80 %), gut (≥60 %), ausbaufähig (≥40 %), schwach (<40 %) — als Farbe *und* Text
 
-### Genauigkeitsmessung
-- **Gesamttrefferquote:** % aller getroffenen Darts
-- **Pro Position:** Trefferquote für 1./2./3. Dart
-- **Farbcodierung:** Grün (>80%), Orange (60-80%), Rot (<60%)
+## CI/CD
 
-## 🛠️ Entwicklung
+- **CI** ([ci.yml](.github/workflows/ci.yml)): Unit-Tests bei jedem Push und Pull Request
+- **Deploy** ([deploy.yml](.github/workflows/deploy.yml)): Tests → automatisches GitHub-Pages-Deployment bei jedem Push auf `master`
+- **Release** ([release.yml](.github/workflows/release.yml)): Git-Tag `v*` → Tests → GitHub-Release mit generierten Release Notes
 
-### Features hinzufügen
-1. Feature in `/docs/features/` spezifizieren
-2. PO ChatMode für Requirements nutzen
-3. Code implementieren
-4. Tests durchführen
+## Mitmachen
 
-### Code-Prinzipien
-- **KISS:** Keep It Simple, Stupid
-- **DRY:** Don't Repeat Yourself  
-- **Mobile First:** Touch-optimiert
-- **Performance:** Schnelle Response-Zeiten
+1. Repository forken
+2. Feature-Branch erstellen (`git checkout -b feature/mein-feature`)
+3. Änderungen committen und pushen
+4. Pull Request öffnen — die CI läuft automatisch
 
-## 📝 Changelog
+Feature-Ideen und Spezifikationen liegen unter [docs/features/](docs/features/).
 
-### v1.0.0 (2025-12-04)
-- Initial Release
-- Grundlegende Wurf-Eingabe
-- IndexedDB Speicherung
-- Vollständige Statistiken
-- Mobile-optimiertes UI
-- Offline-Funktionalität
+## Lizenz
 
-## 📄 Lizenz
-
-MIT License - Siehe [LICENSE](LICENSE) für Details.
-
-## 🤝 Beitragen
-
-1. Fork das Repository
-2. Feature Branch erstellen (`git checkout -b feature/AmazingFeature`)
-3. Changes committen (`git commit -m 'Add: Amazing Feature'`)
-4. Branch pushen (`git push origin feature/AmazingFeature`)
-5. Pull Request öffnen
-
-## 📞 Support
-
-Bei Fragen oder Problemen:
-- Issues auf GitHub erstellen
-- [Dokumentation](/docs/) durchlesen
-- [Feature-Requests](/docs/features/) einreichen
+[MIT](LICENSE) © 2025 Frank Dreiling
 
 ---
 

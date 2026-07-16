@@ -2,131 +2,21 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Dart Daten</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dart Training Tracker – Datenverwaltung</title>
+    <meta name="description" content="Dart-Trainingsdaten verwalten: einzelne Würfe löschen und alle Daten als JSON-Backup exportieren.">
+    <meta name="theme-color" content="#2c2c2c">
+    <meta property="og:title" content="Dart Training Tracker – Datenverwaltung">
+    <meta property="og:description" content="Dart-Trainingsdaten verwalten und als JSON-Backup exportieren.">
+    <meta property="og:type" content="website">
+    <link rel="icon" href="icon.svg" type="image/svg+xml">
+    <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="styles.css">
-    <style>
-        /* Additional styles for data management page */
-        .delete-item-btn {
-            background: #e74c3c;
-            color: white;
-            border: none;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            min-width: 24px;
-            min-height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .delete-item-btn:hover {
-            background: #c0392b;
-            transform: scale(1.1);
-        }
-
-        .history-item-with-delete {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 15px;
-            margin-bottom: 6px;
-            background: #2c2c2c;
-            border-radius: 6px;
-            border-left: 3px solid #3498db;
-            font-size: 14px;
-        }
-
-        .history-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-grow: 1;
-            margin-right: 10px;
-        }
-
-        .danger-section {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px solid #e74c3c;
-        }
-
-        .danger-btn {
-            background: #e74c3c;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-            transition: all 0.2s ease;
-            font-size: 16px;
-        }
-
-        .danger-btn:hover {
-            background: #c0392b;
-            transform: translateY(-1px);
-        }
-
-        .warning-text {
-            color: #e74c3c;
-            margin-bottom: 15px;
-            font-size: 14px;
-            text-align: center;
-            font-weight: 500;
-        }
-
-        .empty-state {
-            text-align: center;
-            color: #999;
-            padding: 30px;
-            font-style: italic;
-        }
-
-        .total-throws-summary {
-            margin-top: 20px;
-            padding: 15px;
-            background: #2c2c2c;
-            border-radius: 8px;
-            border: 1px solid #4a4a4a;
-            text-align: center;
-            color: #3498db;
-            font-weight: bold;
-            font-size: 16px;
-        }
-
-        @media (max-width: 420px) {
-            .delete-item-btn {
-                min-width: 20px;
-                min-height: 20px;
-                font-size: 10px;
-                padding: 2px 4px;
-            }
-        }
-    </style>
 </head>
 <body>
-    <!-- Tab Navigation -->
-    <nav class="tab-navigation">
-        <a href="index.html" class="tab-item">
-            <span class="tab-icon">🎯</span>
-            <span class="tab-label">Play</span>
-        </a>
-        <a href="stats.html" class="tab-item">
-            <span class="tab-icon">📊</span>
-            <span class="tab-label">Stats</span>
-        </a>
-        <a href="data.html" class="tab-item active">
-            <span class="tab-icon">🗂</span>
-            <span class="tab-label">Data</span>
-        </a>
-    </nav>
-
     <main class="app-main">
+        <h1 class="sr-only">Dart Training – Datenverwaltung</h1>
+
         <!-- Recent Throws with Delete Option -->
         <section>
             <h2>Letzte 10 Würfe</h2>
@@ -137,9 +27,32 @@
                 <!-- Wird dynamisch gefüllt -->
             </div>
         </section>
+
+        <!-- Backup / Export -->
+        <section>
+            <h2>Backup</h2>
+            <p class="section-hint">Alle Trainingsdaten liegen nur in diesem Browser. Regelmäßig exportieren schützt vor Datenverlust.</p>
+            <button type="button" id="exportBtn" class="export-btn">Daten als JSON exportieren</button>
+        </section>
     </main>
 
-    <script src="app.js"></script>
-    <script src="data-management.js"></script>
+    <!-- Tab Navigation (Bottom) -->
+    <nav class="tab-navigation" aria-label="Hauptnavigation">
+        <a href="index.html" class="tab-item">
+            <span class="tab-icon" aria-hidden="true">🎯</span>
+            <span class="tab-label">Spiel</span>
+        </a>
+        <a href="stats.html" class="tab-item">
+            <span class="tab-icon" aria-hidden="true">📊</span>
+            <span class="tab-label">Statistik</span>
+        </a>
+        <a href="data.html" class="tab-item active" aria-current="page">
+            <span class="tab-icon" aria-hidden="true">🗂</span>
+            <span class="tab-label">Daten</span>
+        </a>
+    </nav>
+
+    <script src="shared.js"></script>
+    <script src="data.js"></script>
 </body>
 </html>

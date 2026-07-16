@@ -2,37 +2,35 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Dart Tracking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dart Training Tracker – Würfe erfassen</title>
+    <meta name="description" content="Kostenlose offline Dart-Trainings-App: Würfe erfassen, Trefferquote und Statistiken auswerten. Dart practice tracker with offline support.">
+    <meta name="theme-color" content="#2c2c2c">
+    <meta property="og:title" content="Dart Training Tracker">
+    <meta property="og:description" content="Dart-Trainingswürfe erfassen und Trefferquote systematisch verbessern – offline, kostenlos, ohne Anmeldung.">
+    <meta property="og:type" content="website">
+    <link rel="icon" href="icon.svg" type="image/svg+xml">
+    <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="styles.css">
-    <style>
-        /* Ensure proper bottom spacing for navigation */
-        .app-main {
-            padding-bottom: 130px !important;
-        }
-        
-        /* Additional spacing for target selection section */
-        .target-selection {
-            margin-bottom: 40px !important;
-        }
-    </style>
 </head>
 <body>
-    <main class="app-main">
+    <main class="app-main app-main--play">
+        <h1 class="sr-only">Dart Training – Wurf eingeben</h1>
+
         <!-- Aktueller Wurf Status -->
         <section class="current-throw">
             <div class="section-header">
                 <h2>Aktueller Wurf</h2>
-                <button id="undoBtn" class="undo-button" title="Letzten Dart zurücksetzen">
+                <button type="button" id="undoBtn" class="undo-button" aria-label="Letzten Dart zurücksetzen" title="Letzten Dart zurücksetzen">
                     ↶
                 </button>
             </div>
-            <div class="throw-display-simple" id="throwDisplaySimple">
-                <span id="dart1Simple">-</span>
-                <span class="separator">/</span>
-                <span id="dart2Simple">-</span>
-                <span class="separator">/</span>
-                <span id="dart3Simple">-</span>
+            <div class="throw-display-simple" id="throwDisplay" aria-live="polite">
+                <span id="dart1">-</span>
+                <span class="separator" aria-hidden="true">/</span>
+                <span id="dart2">-</span>
+                <span class="separator" aria-hidden="true">/</span>
+                <span id="dart3">-</span>
             </div>
         </section>
 
@@ -40,16 +38,16 @@
         <section class="input-section">
             <h2>Wurf eingeben</h2>
             <div class="input-buttons">
-                <button class="input-btn single-btn" data-type="single">
+                <button type="button" class="input-btn single-btn" data-type="single">
                     Single
                 </button>
-                <button class="input-btn double-btn" data-type="double">
+                <button type="button" class="input-btn double-btn" data-type="double">
                     Double
                 </button>
-                <button class="input-btn triple-btn" data-type="triple">
+                <button type="button" class="input-btn triple-btn" data-type="triple">
                     Triple
                 </button>
-                <button class="input-btn miss-btn" data-type="miss">
+                <button type="button" class="input-btn miss-btn" data-type="miss">
                     Miss
                 </button>
             </div>
@@ -96,22 +94,22 @@
     </main>
 
     <!-- Tab Navigation (Bottom) -->
-    <nav class="tab-navigation bottom-nav">
-        <a href="index.html" class="tab-item active">
-            <span class="tab-icon">🎯</span>
-            <span class="tab-label">Play</span>
+    <nav class="tab-navigation" aria-label="Hauptnavigation">
+        <a href="index.html" class="tab-item active" aria-current="page">
+            <span class="tab-icon" aria-hidden="true">🎯</span>
+            <span class="tab-label">Spiel</span>
         </a>
         <a href="stats.html" class="tab-item">
-            <span class="tab-icon">📊</span>
-            <span class="tab-label">Stats</span>
+            <span class="tab-icon" aria-hidden="true">📊</span>
+            <span class="tab-label">Statistik</span>
         </a>
         <a href="data.html" class="tab-item">
-            <span class="tab-icon">🗂</span>
-            <span class="tab-label">Data</span>
+            <span class="tab-icon" aria-hidden="true">🗂</span>
+            <span class="tab-label">Daten</span>
         </a>
     </nav>
 
-    <script src="app.js"></script>
+    <script src="shared.js"></script>
     <script src="input.js"></script>
 </body>
 </html>
