@@ -8,7 +8,8 @@ class DartInputApp {
             currentDartIndex: 0
         };
         this.recentThrows = [];
-        
+        this.completeThrowTimer = null;
+
         this.init();
     }
 
@@ -19,47 +20,51 @@ class DartInputApp {
         } catch (error) {
             console.error('Database initialization failed:', error);
         }
-        
-        this.setupUI();
-        this.loadCurrentState(); // Load saved throw state
+
+        this.setupTargetDropdown();
+        this.loadCurrentState();
+
+        // Wiederhergestellter Wurf war bereits vollständig → direkt abschließen
+        if (this.currentThrow.currentDartIndex >= 3) {
+            await this.completeThrow();
+        }
+
         this.updateDisplay();
         this.bindEvents();
-    }
-
-    setupUI() {
-        this.setupTargetDropdown();
-        this.updateThrowDisplay();
     }
 
     setupTargetDropdown() {
         const dropdown = document.getElementById('targetSelect');
         dropdown.addEventListener('change', (e) => {
-            this.setTarget(parseInt(e.target.value));
+            this.setTarget(parseInt(e.target.value, 10));
         });
-        
-        // Load saved target or default to 20
-        const savedTarget = localStorage.getItem('dartTarget');
-        if (savedTarget) {
-            this.currentTarget = parseInt(savedTarget);
-            dropdown.value = this.currentTarget;
+
+        const savedTarget = parseInt(localStorage.getItem('dartTarget'), 10);
+        if (!Number.isNaN(savedTarget)) {
+            this.currentTarget = savedTarget;
         } else {
-            this.currentTarget = parseInt(dropdown.value);
+            this.currentTarget = parseInt(dropdown.value, 10);
         }
+        this.syncTargetUI();
     }
 
     setTarget(target) {
         this.currentTarget = target;
-        const dropdown = document.getElementById('targetSelect');
-        dropdown.value = target;
-        
-        // Save target to localStorage
         localStorage.setItem('dartTarget', target.toString());
+        this.syncTargetUI();
     }
 
+    syncTargetUI() {
+        const dropdown = document.getElementById('targetSelect');
+        dropdown.value = this.currentTarget;
 
+        // Triple Bull existiert nicht: Triple-Button bei Ziel 25 sperren
+        const tripleBtn = document.querySelector('.input-btn[data-type="triple"]');
+        const buttonsLocked = this.currentThrow.currentDartIndex >= 3;
+        tripleBtn.disabled = buttonsLocked || this.currentTarget === 25;
+    }
 
     bindEvents() {
-        // Input buttons
         document.querySelectorAll('.input-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 const type = btn.getAttribute('data-type');
@@ -67,17 +72,14 @@ class DartInputApp {
             });
         });
 
-        // Undo button
         document.getElementById('undoBtn').addEventListener('click', () => {
             this.undoLastAction();
         });
 
-        // Auto-save on page unload
         window.addEventListener('beforeunload', () => {
             this.saveCurrentState();
         });
 
-        // Handle visibility change for mobile
         document.addEventListener('visibilitychange', () => {
             if (document.hidden) {
                 this.saveCurrentState();
@@ -90,13 +92,10 @@ class DartInputApp {
             return;
         }
 
-        const hit = type !== 'miss';
-        const points = calculatePoints(this.currentTarget, type);
-
         const dart = {
             type: type,
-            hit: hit,
-            points: points,
+            hit: type !== 'miss',
+            points: calculatePoints(this.currentTarget, type),
             target: this.currentTarget
         };
 
@@ -104,56 +103,44 @@ class DartInputApp {
         this.currentThrow.currentDartIndex++;
 
         this.updateThrowDisplay();
-        this.saveCurrentState(); // Save after each dart
+        this.saveCurrentState();
 
         // Auto-complete throw after 3 darts
         if (this.currentThrow.currentDartIndex >= 3) {
-            setTimeout(() => this.completeThrow(), 500);
+            this.completeThrowTimer = setTimeout(() => this.completeThrow(), 500);
         }
-        
-        // Update undo button state
+
         this.updateUndoButton();
     }
 
     async completeThrow() {
+        this.completeThrowTimer = null;
+
+        const darts = this.currentThrow.darts;
+        if (darts.some(dart => !dart)) return; // Undo während des Timers
+
         const throwData = {
             id: generateUUID(),
             target: this.currentTarget,
-            darts: [...this.currentThrow.darts],
-            totalPoints: this.currentThrow.darts.reduce((sum, dart) => sum + dart.points, 0),
+            darts: [...darts],
+            totalPoints: darts.reduce((sum, dart) => sum + dart.points, 0),
             timestamp: new Date().toISOString()
         };
 
         try {
             await dartDB.saveThrow(throwData);
             this.recentThrows.unshift(throwData);
-            
-            // Keep only last 10 throws in memory
+
             if (this.recentThrows.length > 10) {
                 this.recentThrows = this.recentThrows.slice(0, 10);
             }
-
         } catch (error) {
             console.error('Error saving throw:', error);
         }
 
-        // Reset for next throw
         this.resetCurrentThrow();
-        this.clearCurrentState(); // Clear saved state after completion
+        this.clearCurrentState();
         this.updateDisplay();
-        this.resetCurrentThrow();
-        this.updateHistoryDisplay();
-        this.updateUndoButton();
-    }
-
-    formatDartForDisplay(dart) {
-        if (dart.type === 'miss') return '0';
-        
-        const target = dart.target === 25 ? 'B' : dart.target;
-        const prefix = dart.type === 'single' ? '' : 
-                      dart.type === 'double' ? 'D' : 'T';
-        
-        return `${prefix}${target}`;
     }
 
     resetCurrentThrow() {
@@ -166,80 +153,80 @@ class DartInputApp {
 
     updateThrowDisplay() {
         for (let i = 0; i < 3; i++) {
-            const element = document.getElementById(`dart${i + 1}Simple`);
+            const element = document.getElementById(`dart${i + 1}`);
             const dart = this.currentThrow.darts[i];
-            
+
             if (dart) {
-                const displayText = this.formatDartForDisplay(dart);
-                element.textContent = displayText;
+                element.textContent = dart.type === 'miss' ? '0' : formatDartResult(dart);
                 element.classList.add('dart-completed');
-                if (dart.type === 'miss') {
-                    element.classList.add('dart-miss');
-                } else {
-                    element.classList.remove('dart-miss');
-                }
+                element.classList.toggle('dart-miss', dart.type === 'miss');
             } else {
                 element.textContent = '-';
                 element.classList.remove('dart-completed', 'dart-miss');
             }
         }
-        
-        // Enable/disable buttons
+
         const buttonsDisabled = this.currentThrow.currentDartIndex >= 3;
         document.querySelectorAll('.input-btn').forEach(btn => {
             btn.disabled = buttonsDisabled;
         });
+        this.syncTargetUI();
     }
 
     updateHistoryDisplay() {
         const historyList = document.getElementById('historyList');
-        
+        historyList.textContent = '';
+
         if (this.recentThrows.length === 0) {
-            historyList.innerHTML = '<div class="history-placeholder">Noch keine Würfe erfasst</div>';
+            const placeholder = document.createElement('div');
+            placeholder.className = 'history-placeholder';
+            placeholder.textContent = 'Noch keine Würfe erfasst';
+            historyList.appendChild(placeholder);
             return;
         }
 
-        const historyHTML = this.recentThrows.slice(0, 3).map(throwData => {
-            const dartResults = throwData.darts.map(dart => formatDartResult(dart)).join(' / ');
-            const timestamp = formatDateTime(new Date(throwData.timestamp));
-            
-            return `
-                <div class="history-item">
-                    <div class="history-throws">${dartResults}</div>
-                    <div class="history-meta">${timestamp}</div>
-                </div>
-            `;
-        }).join('');
+        this.recentThrows.slice(0, 3).forEach(throwData => {
+            const item = document.createElement('div');
+            item.className = 'history-item';
 
-        historyList.innerHTML = historyHTML;
+            const throwsDiv = document.createElement('div');
+            throwsDiv.className = 'history-throws';
+            throwsDiv.textContent = throwData.darts.map(dart => formatDartResult(dart)).join(' / ');
+
+            const metaDiv = document.createElement('div');
+            metaDiv.className = 'history-meta';
+            metaDiv.textContent = formatDateTime(new Date(throwData.timestamp));
+
+            item.append(throwsDiv, metaDiv);
+            historyList.appendChild(item);
+        });
     }
 
-    async undoLastAction() {
-        // Only undo dart inputs, not completed throws
-        if (this.currentThrow.currentDartIndex > 0) {
-            this.currentThrow.currentDartIndex--;
-            this.currentThrow.darts[this.currentThrow.currentDartIndex] = null;
-            this.updateThrowDisplay();
-            this.updateUndoButton();
-            this.saveCurrentState(); // Save after undo
+    undoLastAction() {
+        // Nur Dart-Eingaben zurücknehmen, nie gespeicherte Würfe
+        if (this.currentThrow.currentDartIndex === 0) return;
+
+        // Läuft der Auto-Complete-Timer noch, abbrechen
+        if (this.completeThrowTimer !== null) {
+            clearTimeout(this.completeThrowTimer);
+            this.completeThrowTimer = null;
         }
-        // No database operations - only undo current throw input
+
+        this.currentThrow.currentDartIndex--;
+        this.currentThrow.darts[this.currentThrow.currentDartIndex] = null;
+        this.updateThrowDisplay();
+        this.updateUndoButton();
+        this.saveCurrentState();
     }
 
     updateUndoButton() {
         const undoBtn = document.getElementById('undoBtn');
-        const hasActiveDarts = this.currentThrow.currentDartIndex > 0;
-        
-        undoBtn.disabled = !hasActiveDarts;
-        undoBtn.style.opacity = hasActiveDarts ? '1' : '0.3';
+        undoBtn.disabled = this.currentThrow.currentDartIndex === 0;
     }
 
     async loadRecentThrows() {
         try {
-            const allThrows = await dartDB.getAllThrows();
-            this.recentThrows = allThrows
-                .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
-                .slice(0, 10);
+            this.recentThrows = await dartDB.getRecentThrows(10);
         } catch (error) {
             console.error('Error loading throws:', error);
             this.recentThrows = [];
@@ -253,36 +240,33 @@ class DartInputApp {
     }
 
     saveCurrentState() {
-        // Save current incomplete throw to localStorage as backup
         if (this.currentThrow.currentDartIndex > 0) {
             localStorage.setItem('dartAppCurrentThrow', JSON.stringify(this.currentThrow));
-            localStorage.setItem('dartAppCurrentTarget', this.currentTarget.toString());
+        } else {
+            this.clearCurrentState();
         }
     }
 
     loadCurrentState() {
-        // Restore current throw from localStorage
         const savedThrow = localStorage.getItem('dartAppCurrentThrow');
-        const savedTarget = localStorage.getItem('dartAppCurrentTarget');
-        
-        if (savedThrow) {
-            this.currentThrow = JSON.parse(savedThrow);
-            localStorage.removeItem('dartAppCurrentThrow');
-        }
-        
-        if (savedTarget) {
-            this.currentTarget = parseInt(savedTarget);
-            localStorage.removeItem('dartAppCurrentTarget');
+        if (!savedThrow) return;
+
+        localStorage.removeItem('dartAppCurrentThrow');
+        try {
+            const parsed = JSON.parse(savedThrow);
+            if (parsed && Array.isArray(parsed.darts) && parsed.darts.length === 3 &&
+                Number.isInteger(parsed.currentDartIndex) &&
+                parsed.currentDartIndex >= 0 && parsed.currentDartIndex <= 3) {
+                this.currentThrow = parsed;
+            }
+        } catch (error) {
+            console.error('Could not restore saved throw:', error);
         }
     }
 
     clearCurrentState() {
-        // Clear saved throw state from localStorage
         localStorage.removeItem('dartAppCurrentThrow');
-        localStorage.removeItem('dartAppCurrentTarget');
     }
-
-
 }
 
 // Initialize app when DOM is loaded
