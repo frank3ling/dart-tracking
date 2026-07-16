@@ -23,4 +23,4 @@ All updates must satisfy:
 - [ ] Unit tests pass (`node --test 'tests/*.test.js'`)
 - [ ] HTML validates (`npx html-validate index.html stats.html data.html`)
 - [ ] Change verified in the browser (mobile viewport)
-- [ ] For releases: `CACHE_VERSION` in `sw.js` matches the new tag
+- [ ] For releases: `CHANGELOG.md` updated and `CACHE_VERSION` in `sw.js` matches the new tag
