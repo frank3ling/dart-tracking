@@ -43,7 +43,7 @@ jobs:
              styles.css shared.js input.js stats.js data.js \
              sw.js manifest.json icon.svg _site/
 
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: _site
 
