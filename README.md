@@ -82,12 +82,7 @@ node --test 'tests/*.test.js'
 
 ## Mitmachen
 
-1. Repository forken
-2. Feature-Branch erstellen (`git checkout -b feature/mein-feature`)
-3. Änderungen committen und pushen
-4. Pull Request öffnen — die CI läuft automatisch
-
-Feature-Ideen und Spezifikationen liegen unter [docs/features/](docs/features/).
+Dieses Repository nimmt **keine Pull Requests** an — eingehende PRs werden automatisch geschlossen (siehe [CONTRIBUTING.md](CONTRIBUTING.md)). Dank MIT-Lizenz darf das Projekt aber jederzeit geforkt und als eigene Version weiterentwickelt werden. Bug-Reports und Feature-Ideen gern als GitHub Issue.
 
 ## Lizenz
 
